@@ -10,20 +10,6 @@ struct Pipe{
     int length;
     int diameter;
     bool is_working;
-
-    // friend ostream& operator << (ostream &os, const Pipe &pipe){
-    //     if (is_created(pipe)){
-    //         os << "Pipe:" << endl
-    //             << "name: " << pipe.name << endl
-    //             << "lenght: " << pipe.length << endl
-    //             << "diameter: " << pipe.diameter << endl
-    //             << "is working" << is_work(pipe) << endl;
-    //     } else {
-    //         os << "The pipe has not been created yet" << endl;
-    //     }
-
-    //     return os;
-    // }
 };
 
 
@@ -33,11 +19,6 @@ struct CompressorStation{
     int number_of_workshops;
     int workshops_in_work;
     float efficiency;
-
-    // friend ostream& operator << (ostream& os, const CompressorStation &compressor_station){
-    //     os <<  << endl;
-    //     return os;
-    // }
 };
 
 
@@ -51,8 +32,19 @@ bool is_created(const CompressorStation &compressor_station){
 }
 
 
-string is_work(const Pipe &pipe){
+string work_to_string(const Pipe &pipe){
     return pipe.is_working ? "yes" : "no";
+}
+
+
+void edit_work_status(Pipe &pipe){
+    if (is_created(pipe)) {
+        cout << "New working status(0 - no / 1 - yes): ";
+        cin >> pipe.is_working;
+        cout << "New working status is set!" << endl;
+    } else {
+        cout << "The pipe has not been created yet!" << endl;
+    }
 }
 
 
@@ -62,32 +54,30 @@ ostream& operator << (ostream &os, const Pipe &pipe){
             << "name: " << pipe.name << endl
             << "lenght: " << pipe.length << endl
             << "diameter: " << pipe.diameter << endl
-            << "is working: " << is_work(pipe) << endl
+            << "is working: " << work_to_string(pipe) << endl
             << "--------------" << endl;
     } else {
-        os << "The pipe has not been created yet" << endl;
+        os << "The pipe has not been created yet!" << endl;
     }
 
     return os;
 }
 
 
-// void Create(Pipe &pipe, int name, int lenght, int diameter, bool is_working){
-//     // создать(переопределить свойства) трубу
-//     pipe.name = name;
-//     pipe.length = lenght;
-//     pipe.diameter = diameter;
-//     pipe.is_working = is_working;
-// };
+ostream& operator << (ostream &os, const CompressorStation &compressor_station){
+    if (is_created(compressor_station)){
+        os << "-----Compressor Station-----" << endl
+            << "name: " << compressor_station.name << endl
+            << "number of workshops: " << compressor_station.number_of_workshops << endl
+            << "workshops in work: " << compressor_station.workshops_in_work << endl
+            << "efficiency: " << compressor_station.efficiency * 100 << "%" << endl
+            << "--------------" << endl;
+    } else {
+        os << "The compressor station has not been created yet!" << endl;
+    }
 
-
-// void Create(CompressorStation &compressor_station, string name, int number_of_workshops, int workshops_in_work, float efficiency){
-//     // создать(переопределить свойства) компрессорной станции
-//     compressor_station.name = name;
-//     compressor_station.number_of_workshops = number_of_workshops;
-//     compressor_station.workshops_in_work = workshops_in_work;
-//     compressor_station.efficiency = efficiency;
-// };
+    return os;
+}
 
 
 void print_main_menu(){
@@ -131,7 +121,7 @@ void add_pipe(Pipe &pipe){
 
 void add_compressorStation(CompressorStation &compressor_station){
     if (is_created(compressor_station)){
-        cout << "compressor station is created already\n";
+        cout << "Compressor station is created already\n";
     } else {
         cout << "---add compressor station---\n";
 
@@ -155,9 +145,9 @@ void add_compressorStation(CompressorStation &compressor_station){
 }
 
 
-void see_all_objects(Pipe &pipe, CompressorStation &compressor_station){
+void see_all_objects(const Pipe &pipe, const CompressorStation &compressor_station){
     cout << pipe;
-    // cout << compressor_station;
+    cout << compressor_station;
 }
 
 
@@ -188,6 +178,7 @@ void main_menu(){
             see_all_objects(pipe, compressor_station);
             break;
         case 4:
+            edit_work_status(pipe);
             break;
         case 5:
             break;
