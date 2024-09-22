@@ -5,6 +5,7 @@
 #
 *.exe
 *.vscode
+build
 
 ### CMake ###
 CMakeLists.txt.user
