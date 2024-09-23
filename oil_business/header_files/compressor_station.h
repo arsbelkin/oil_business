@@ -11,3 +11,7 @@ bool is_created(const CompressorStation &compressor_station);
 std::ostream& operator << (std::ostream &os, const CompressorStation &compressor_station);
 
 void add_compressorStation(CompressorStation &compressor_station);
+
+bool is_valid_workshop(const CompressorStation &compressor_station, int number);
+
+void edit_workshop_status(CompressorStation &compressor_station);

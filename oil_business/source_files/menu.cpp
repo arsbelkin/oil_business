@@ -13,7 +13,7 @@ void print_main_menu(){
     cout << "2 - add compressor station\n";
     cout << "3 - see all objects\n";
     cout << "4 - edit pipe\n";
-    cout << "5 - edit compressor stationn\n";
+    cout << "5 - edit compressor station\n";
     cout << "6 - save in file\n";
     cout << "7 - upload from file\n";
     cout << "--------------\n";
@@ -55,6 +55,7 @@ void main_menu(){
             edit_work_status(pipe);
             break;
         case 5:
+            edit_workshop_status(compressor_station);
             break;
         case 6:
             break;

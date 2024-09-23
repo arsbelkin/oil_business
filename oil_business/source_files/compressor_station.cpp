@@ -1,5 +1,6 @@
 #include <iostream>
 #include "../header_files/compressor_station.h"
+#include <math.h>
 
 using namespace std;
 
@@ -25,6 +26,11 @@ ostream& operator << (ostream &os, const CompressorStation &compressor_station){
 }
 
 
+void calc_eff(CompressorStation &compressor_station){
+    compressor_station.efficiency = (float)compressor_station.workshops_in_work / compressor_station.number_of_workshops;
+}
+
+
 void add_compressorStation(CompressorStation &compressor_station){
     if (is_created(compressor_station)){
         cout << "Compressor station is created already\n";
@@ -41,11 +47,32 @@ void add_compressorStation(CompressorStation &compressor_station){
         cin >> compressor_station.workshops_in_work;
 
         cout << "efficiency: ";
-        compressor_station.efficiency = (float)compressor_station.workshops_in_work / compressor_station.number_of_workshops;
+        calc_eff(compressor_station);
         cout << compressor_station.efficiency * 100 << "%" << endl;
 
         cout << "Comperssor Station is created!\n";
 
         cout << "----------------------------\n";
     };
+}
+
+
+void edit_workshop_status(CompressorStation &compressor_station){
+    if (is_created(compressor_station)){
+        int choise;
+        cout << "Stop(1) or Start(2) the workshop: ";
+        cin >> choise;
+        if (choise == 1){
+            if (compressor_station.workshops_in_work > 0){
+                --compressor_station.workshops_in_work;
+            };
+        } else {
+            if (compressor_station.workshops_in_work < compressor_station.number_of_workshops) {
+                ++compressor_station.workshops_in_work;
+            };
+        };
+        calc_eff(compressor_station);
+    } else {
+        cout << "The pipe has not been created yet!" << endl;
+    }
 }
