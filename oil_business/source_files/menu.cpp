@@ -26,6 +26,19 @@ void see_all_objects(const Pipe &pipe, const CompressorStation &compressor_stati
 }
 
 
+void save_menu(const Pipe &pipe, const CompressorStation &compressor_station){
+    int choice;
+    cout << "1 - save pipe or 2 - save CS: ";
+    cin >> choice;
+
+    if (choice == 1){
+        save(pipe);
+    } else {
+        save(compressor_station);
+    }
+}
+
+
 void main_menu(){
     Pipe pipe = {"", -1, -1, 0};
     CompressorStation compressor_station = {"", -1, -1, -1};
@@ -58,6 +71,7 @@ void main_menu(){
             edit_workshop_status(compressor_station);
             break;
         case 6:
+            save_menu(pipe, compressor_station);
             break;
         case 7:
             break;

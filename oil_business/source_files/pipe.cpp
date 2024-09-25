@@ -1,5 +1,6 @@
 #include <iostream>
 #include "../header_files/pipe.h"
+#include <fstream>
 
 using namespace std;
 
@@ -63,4 +64,21 @@ void add_pipe(Pipe &pipe){
 
         cout << "------------------\n";
     };
+}
+
+
+void save(const Pipe &pipe){
+    if (is_created(pipe)) {
+        ofstream file("static/pipe.txt");
+        if (file.is_open()){
+            file << pipe.name << endl;
+            file << pipe.length << endl;
+            file << pipe.diameter << endl;
+            file << pipe.is_working << endl;
+        }
+        file.close();
+        cout << "Pipe save in file!\n";
+    } else {
+        cout << "The pipe has not been created yet!" << endl;
+    }
 }

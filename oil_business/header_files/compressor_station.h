@@ -15,3 +15,5 @@ void add_compressorStation(CompressorStation &compressor_station);
 bool is_valid_workshop(const CompressorStation &compressor_station, int number);
 
 void edit_workshop_status(CompressorStation &compressor_station);
+
+void save(const CompressorStation &compressor_station);

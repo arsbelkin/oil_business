@@ -1,6 +1,7 @@
 #include <iostream>
 #include "../header_files/compressor_station.h"
 #include <math.h>
+#include <fstream>
 
 using namespace std;
 
@@ -59,10 +60,10 @@ void add_compressorStation(CompressorStation &compressor_station){
 
 void edit_workshop_status(CompressorStation &compressor_station){
     if (is_created(compressor_station)){
-        int choise;
+        int choice;
         cout << "Stop(1) or Start(2) the workshop: ";
-        cin >> choise;
-        if (choise == 1){
+        cin >> choice;
+        if (choice == 1){
             if (compressor_station.workshops_in_work > 0){
                 --compressor_station.workshops_in_work;
             };
@@ -72,7 +73,25 @@ void edit_workshop_status(CompressorStation &compressor_station){
             };
         };
         calc_eff(compressor_station);
+        cout << "New worksop status is set\n";
+        cout << "Now eff = " << compressor_station.efficiency * 100 << '%' << endl;
     } else {
-        cout << "The pipe has not been created yet!" << endl;
+        cout << "The CS has not been created yet!" << endl;
+    }
+}
+
+
+void save(const CompressorStation &compressor_station){
+    if (is_created(compressor_station)){
+        ofstream file("static/CS.txt");
+        if (file.is_open()){
+            file << compressor_station.name << endl;
+            file << compressor_station.number_of_workshops << endl;
+            file << compressor_station.workshops_in_work << endl;
+            file << compressor_station.efficiency * 100 << '%' << endl;
+        }
+        file.close();
+    } else {
+        cout << "The CS has not been created yet!" << endl;
     }
 }

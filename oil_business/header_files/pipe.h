@@ -15,3 +15,5 @@ void edit_work_status(Pipe &pipe);
 std::ostream& operator << (std::ostream &os, const Pipe &pipe);
 
 void add_pipe(Pipe &pipe);
+
+void save(const Pipe &pipe);
