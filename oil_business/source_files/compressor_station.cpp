@@ -45,7 +45,7 @@ void add_compressorStation(CompressorStation &compressor_station){
         getline(cin, compressor_station.name);
 
         cout << "number of workshops: ";
-        compressor_station.number_of_workshops = valid_int("number of workshops: ", 0, 10000);
+        compressor_station.number_of_workshops = valid_int("number of workshops: ", 1, 10000);
 
         cout << "workshops in work: ";
         compressor_station.workshops_in_work = valid_int("workshops in work: ", 0, compressor_station.number_of_workshops);
