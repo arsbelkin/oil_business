@@ -1,7 +1,9 @@
 #include <iostream>
 #include "../header_files/compressor_station.h"
+#include "../header_files/pipe.h"
 #include <math.h>
 #include <fstream>
+#include "../header_files/utils.h"
 
 using namespace std;
 
@@ -39,13 +41,14 @@ void add_compressorStation(CompressorStation &compressor_station){
         cout << "---add compressor station---\n";
 
         cout << "name: ";
-        cin >> compressor_station.name;
+        cin.ignore(1000, '\n');
+        getline(cin, compressor_station.name);
 
         cout << "number of workshops: ";
-        cin >> compressor_station.number_of_workshops;
+        compressor_station.number_of_workshops = valid_int("number of workshops: ", 0, 10000);
 
         cout << "workshops in work: ";
-        cin >> compressor_station.workshops_in_work;
+        compressor_station.workshops_in_work = valid_int("workshops in work: ", 0, compressor_station.number_of_workshops);
 
         cout << "efficiency: ";
         calc_eff(compressor_station);
@@ -62,7 +65,7 @@ void edit_workshop_status(CompressorStation &compressor_station){
     if (is_created(compressor_station)){
         int choice;
         cout << "Stop(1) or Start(2) the workshop: ";
-        cin >> choice;
+        choice = valid_int("Stop(1) or Start(2) the workshop: ", 1, 2);
         if (choice == 1){
             if (compressor_station.workshops_in_work > 0){
                 --compressor_station.workshops_in_work;
@@ -81,17 +84,30 @@ void edit_workshop_status(CompressorStation &compressor_station){
 }
 
 
-void save(const CompressorStation &compressor_station){
+void save(ofstream &file, const CompressorStation &compressor_station){
     if (is_created(compressor_station)){
-        ofstream file("static/CS.txt");
-        if (file.is_open()){
-            file << compressor_station.name << endl;
-            file << compressor_station.number_of_workshops << endl;
-            file << compressor_station.workshops_in_work << endl;
-            file << compressor_station.efficiency * 100 << '%' << endl;
-        }
-        file.close();
+        file << "CS" << endl;
+        file << compressor_station.name << endl;
+        file << compressor_station.number_of_workshops << endl;
+        file << compressor_station.workshops_in_work << endl;
+        file << compressor_station.efficiency * 100 << '%' << endl;
+        cout << "CS save in file!\n";
     } else {
+        file << "None" << endl;
         cout << "The CS has not been created yet!" << endl;
+    }
+}
+
+
+void load(std::ifstream &file, CompressorStation &compressor_station){
+    if (is_created(compressor_station)){
+        cout << "CS is created already!\n";
+    } else {
+        file.ignore(10000, '\n');
+        getline(file, compressor_station.name);
+        file >> compressor_station.number_of_workshops;
+        file >> compressor_station.workshops_in_work;
+        calc_eff(compressor_station);
+        cout << "CS is created from file!" << endl;
     }
 }

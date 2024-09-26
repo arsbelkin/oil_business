@@ -10,6 +10,12 @@ include_directories("oil_business/header_files/")
 
 set(SRC_DIR oil_business/source_files)
 
-set(SRC_LIST ${SRC_DIR}/main.cpp ${SRC_DIR}/pipe.cpp ${SRC_DIR}/compressor_station.cpp ${SRC_DIR}/menu.cpp)
+set(SRC_LIST
+    ${SRC_DIR}/main.cpp 
+    ${SRC_DIR}/pipe.cpp 
+    ${SRC_DIR}/compressor_station.cpp 
+    ${SRC_DIR}/menu.cpp 
+    ${SRC_DIR}/utils.cpp
+    )
 
 add_executable(${PROJECT_NAME}.exe ${SRC_LIST})

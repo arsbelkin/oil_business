@@ -16,4 +16,6 @@ std::ostream& operator << (std::ostream &os, const Pipe &pipe);
 
 void add_pipe(Pipe &pipe);
 
-void save(const Pipe &pipe);
+void save(std::ofstream &file, const Pipe &pipe);
+
+void load(std::ifstream &file, Pipe &pipe);

@@ -2,6 +2,7 @@
 #include "../header_files/pipe.h"
 #include "../header_files/compressor_station.h"
 #include "../header_files/menu.h"
+#include "../header_files/utils.h"
 
 using namespace std;
 
@@ -27,15 +28,7 @@ void see_all_objects(const Pipe &pipe, const CompressorStation &compressor_stati
 
 
 void save_menu(const Pipe &pipe, const CompressorStation &compressor_station){
-    int choice;
-    cout << "1 - save pipe or 2 - save CS: ";
-    cin >> choice;
-
-    if (choice == 1){
-        save(pipe);
-    } else {
-        save(compressor_station);
-    }
+    save_obj(pipe, compressor_station);
 }
 
 
@@ -46,9 +39,7 @@ void main_menu(){
     while (true){
         print_main_menu();
 
-
-        int choice;
-        cin >> choice;
+        int choice = valid_int("input number: ", 0, 9);
 
         switch (choice)
         {
@@ -74,6 +65,7 @@ void main_menu(){
             save_menu(pipe, compressor_station);
             break;
         case 7:
+            load_obj(pipe, compressor_station);
             break;
         default:
             cout << "You choose the number, that not exist!\n";
