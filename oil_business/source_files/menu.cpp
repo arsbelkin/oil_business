@@ -16,20 +16,9 @@ void print_main_menu(){
     cout << "4 - edit pipe\n";
     cout << "5 - edit compressor station\n";
     cout << "6 - save in file\n";
-    cout << "7 - upload from file\n";
+    cout << "7 - load from file\n";
     cout << "--------------\n";
 };
-
-
-void see_all_objects(const Pipe &pipe, const CompressorStation &compressor_station){
-    cout << pipe;
-    cout << compressor_station;
-}
-
-
-void save_menu(const Pipe &pipe, const CompressorStation &compressor_station){
-    save_obj(pipe, compressor_station);
-}
 
 
 void main_menu(){
@@ -39,7 +28,7 @@ void main_menu(){
     while (true){
         print_main_menu();
 
-        int choice = valid_int("input number: ", 0, 9);
+        int choice = valid_int("input number: ", 0, 7);
 
         switch (choice)
         {
@@ -62,7 +51,7 @@ void main_menu(){
             edit_workshop_status(compressor_station);
             break;
         case 6:
-            save_menu(pipe, compressor_station);
+            save_obj(pipe, compressor_station);
             break;
         case 7:
             load_obj(pipe, compressor_station);

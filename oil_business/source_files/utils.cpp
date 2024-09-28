@@ -8,17 +8,17 @@ using namespace std;
 
 
 int valid_int(std::string message, int min_value, int max_value){
-    int x;
+    int value;
 
-    while ((cin >> x).fail() 
+    while ((cin >> value).fail() 
             || cin.peek() != '\n'
-            || x < min_value || x > max_value)
+            || value < min_value || value > max_value)
     {
         cin.clear();
         cin.ignore(10000, '\n');
         cout << message;
     }
-    return x;
+    return value;
 }
 
 
@@ -41,14 +41,19 @@ void load_obj(Pipe &pipe, CompressorStation &compressor_station){
 
         if (line=="Pipe"){
             load(file, pipe);
-        } else cout << "Pipe cant created from file" << endl;
+        } else cout << "Pipe cant created from file!" << endl;
 
         file >> line;
         if (line == "CS"){
             load(file, compressor_station);
-        } else cout << "CS cant created from file" << endl;
+        } else cout << "CS cant created from file!" << endl;
 
     } else cout << "file not created!" << endl;
     
     file.close();
+}
+
+void see_all_objects(const Pipe &pipe, const CompressorStation &compressor_station){
+    cout << pipe;
+    cout << compressor_station;
 }
