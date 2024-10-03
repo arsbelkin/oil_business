@@ -9,7 +9,7 @@ using namespace std;
 
 
 bool is_created(const CompressorStation &compressor_station){
-    return !(compressor_station.efficiency == -1);
+    return !(compressor_station.workload == -1);
 }
 
 
@@ -19,7 +19,7 @@ ostream& operator << (ostream &os, const CompressorStation &compressor_station){
             << "name: " << compressor_station.name << endl
             << "number of workshops: " << compressor_station.number_of_workshops << endl
             << "workshops in work: " << compressor_station.workshops_in_work << endl
-            << "efficiency: " << compressor_station.efficiency * 100 << "%" << endl
+            << "efficiency: " << compressor_station.workload * 100 << "%" << endl
             << "--------------" << endl;
     } else {
         os << "The compressor station has not been created yet!" << endl;
@@ -29,8 +29,8 @@ ostream& operator << (ostream &os, const CompressorStation &compressor_station){
 }
 
 
-void calc_eff(CompressorStation &compressor_station){
-    compressor_station.efficiency = (float)compressor_station.workshops_in_work / compressor_station.number_of_workshops;
+void calc_workload(CompressorStation &compressor_station){
+    compressor_station.workload = (float)compressor_station.workshops_in_work / compressor_station.number_of_workshops;
 }
 
 
@@ -51,8 +51,8 @@ void add_compressorStation(CompressorStation &compressor_station){
         compressor_station.workshops_in_work = valid_int("workshops in work: ", 0, compressor_station.number_of_workshops);
 
         cout << "efficiency: ";
-        calc_eff(compressor_station);
-        cout << compressor_station.efficiency * 100 << "%" << endl;
+        calc_workload(compressor_station);
+        cout << compressor_station.workload * 100 << "%" << endl;
 
         cout << "Comperssor Station is created!\n";
 
@@ -75,9 +75,9 @@ void edit_workshop_status(CompressorStation &compressor_station){
                 ++compressor_station.workshops_in_work;
             };
         };
-        calc_eff(compressor_station);
+        calc_workload(compressor_station);
         cout << "New worksop status is set\n";
-        cout << "Now eff = " << compressor_station.efficiency * 100 << '%' << endl;
+        cout << "Now eff = " << compressor_station.workload * 100 << '%' << endl;
     } else {
         cout << "The CS has not been created yet!" << endl;
     }
@@ -90,7 +90,7 @@ void save(ofstream &file, const CompressorStation &compressor_station){
         file << compressor_station.name << endl;
         file << compressor_station.number_of_workshops << endl;
         file << compressor_station.workshops_in_work << endl;
-        file << compressor_station.efficiency * 100 << '%' << endl;
+        file << compressor_station.workload * 100 << '%' << endl;
         cout << "CS save in file!\n";
     } else {
         file << "None" << endl;
@@ -107,7 +107,7 @@ void load(std::ifstream &file, CompressorStation &compressor_station){
         getline(file, compressor_station.name);
         file >> compressor_station.number_of_workshops;
         file >> compressor_station.workshops_in_work;
-        calc_eff(compressor_station);
+        calc_workload(compressor_station);
         cout << "CS is created from file!" << endl;
     }
 }
