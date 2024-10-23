@@ -8,6 +8,40 @@
 using namespace std;
 
 
+int Pipe::current_pipeID = 0;
+
+
+Pipe::Pipe(){
+    cout << "-----add pipe-----\n";
+
+    this->id = Pipe::current_pipeID++;
+    cout << "id: " << this->id << endl;;
+
+    cout << "name:";
+    cin.ignore(1000, '\n');
+    getline(cin, this->name);
+
+    cout << "lenght: ";
+    this->length = valid_int("lenght: ", 1, 10000);
+
+    cout << "diameter: ";
+    this->diameter = valid_int("diameter: ", 1, 1000);
+
+    cout << "is_working(0 - no / 1 - yes): ";
+    this->is_working = valid_int("is_working(0 - no / 1 - yes): ", 0, 1);;
+
+    cout << "Pipe is created!\n";
+
+    cout << "------------------\n";
+}
+
+
+int Pipe::get_id() const{
+    return this->id;
+}
+
+
+//TODO: change
 bool Pipe::is_created() const {
     return !(this->diameter == -1);
 }
@@ -18,6 +52,7 @@ string Pipe::work_to_string() const{
 }
 
 
+//TODO: change
 void Pipe::edit_work_status(){
     if (this->is_created()) {
         cout << "New working status(0 - no / 1 - yes): ";
@@ -28,10 +63,11 @@ void Pipe::edit_work_status(){
     }
 }
 
-
+//TODO: change
 ostream& operator << (ostream &os, const Pipe &pipe){
     if (pipe.is_created()){
-        os << "-----Pipe-----" << endl
+        os << "-----Pipe " << pipe.get_id() << "-----" << endl
+            << "id: " << pipe.get_id() << endl
             << "name: " << pipe.name << endl
             << "lenght: " << pipe.length << endl
             << "diameter: " << pipe.diameter << endl
@@ -46,7 +82,7 @@ ostream& operator << (ostream &os, const Pipe &pipe){
 
 
 // TODO: change
-void Pipe::save(ofstream &file){
+void Pipe::save(ofstream &file) const{
     if (this->is_created()) {
         file << "Pipe" << endl;
         file << this->name << endl;
@@ -58,6 +94,12 @@ void Pipe::save(ofstream &file){
         file << "None" << endl;
         cout << "The pipe has not been created yet!" << endl;
     }
+}
+
+
+void add_pipe(unordered_map<int, Pipe> &pipes){
+    Pipe pipe;
+    pipes.emplace(pipe.get_id(), pipe);
 }
 
 
@@ -102,24 +144,24 @@ void Pipe::save(ofstream &file){
 //     if (is_created(pipe)){
 //         cout << "Pipe is created already!\n";
 //     } else {
-//         cout << "-----add pipe-----\n";
+        // cout << "-----add pipe-----\n";
 
-//         cout << "name:";
-//         cin.ignore(1000, '\n');
-//         getline(cin, pipe.name);
+        // cout << "name:";
+        // cin.ignore(1000, '\n');
+        // getline(cin, pipe.name);
 
-//         cout << "lenght: ";
-//         pipe.length = valid_int("lenght: ", 1, 10000);
+        // cout << "lenght: ";
+        // pipe.length = valid_int("lenght: ", 1, 10000);
 
-//         cout << "diameter: ";
-//         pipe.diameter = valid_int("diameter: ", 1, 1000);
+        // cout << "diameter: ";
+        // pipe.diameter = valid_int("diameter: ", 1, 1000);
 
-//         cout << "is_working(0 - no / 1 - yes): ";
-//         pipe.is_working = valid_int("is_working(0 - no / 1 - yes): ", 0, 1);;
+        // cout << "is_working(0 - no / 1 - yes): ";
+        // pipe.is_working = valid_int("is_working(0 - no / 1 - yes): ", 0, 1);;
 
-//         cout << "Pipe is created!\n";
+        // cout << "Pipe is created!\n";
 
-//         cout << "------------------\n";
+        // cout << "------------------\n";
 //     };
 // }
 
