@@ -22,7 +22,7 @@ void print_main_menu(){
 
 void print_pipes_menu(){
     cout << "-----Menu pipe-----\n";
-    cout << "0 - exit\n";
+    cout << "0 - back\n";
     cout << "1 - add pipe\n";
     cout << "2 - select pipes\n";
     cout << "--------------\n";
@@ -41,6 +41,8 @@ void pipes_menu(unordered_map<int, Pipe> &pipes){
             return;
         case 1:
             add_pipe(pipes);
+            break;
+        case 2:
             break;
         default:
             cout << "You choose the number, that not exist!\n";
@@ -87,7 +89,7 @@ void main_menu(){
     while (true){
         print_main_menu();
 
-        int choice = valid_int("input number: ", 0, 7);
+        int choice = valid_int("input number: ", 0, 5);
 
         switch (choice)
         {
@@ -103,11 +105,11 @@ void main_menu(){
         case 3:
             see_all_objects(pipes, c_ss);
             break;
-        case 6:
+        case 4:
             save_obj(pipes, c_ss);
             break;
-        case 7:
-            //load_obj(pipe, compressor_station);
+        case 5:
+            load_obj(pipes, c_ss);
             break;
         default:
             cout << "You choose the number, that not exist!\n";

@@ -1,43 +1,24 @@
 #pragma once
 
 
-// struct CompressorStation{
-//     // компрессорная станция
-//     std::string name;
-//     int number_of_workshops;
-//     int workshops_in_work;
-//     float workload;
-// }; +
-
-// bool is_created(const CompressorStation &compressor_station); +
-
-// std::ostream& operator << (std::ostream &os, const CompressorStation &compressor_station); +
-
-// void calc_workload(CompressorStation &compressor_station); +
-
-// void add_compressorStation(CompressorStation &compressor_station);
-
-// void edit_workshop_status(CompressorStation &compressor_station); +
-
-// void save(std::ofstream &file, const CompressorStation &compressor_station); +
-
-// void load(std::ifstream &file, CompressorStation &compressor_station);
+#define PRINT_WORKLOAD(elem) elem workload * 100 << "%"
 
 
 class CompressorStation{
 private:
     static int current_csID;
+
     int id;
-public:
-    // компрессорная станция
+
     std::string name;
     int number_of_workshops;
     int workshops_in_work;
     float workload;
-
+    
+public:
     CompressorStation();
+    CompressorStation(std::ifstream &file);
 
-    bool is_created() const;
     void calc_workload();
     void edit_workshop_status();
     void save(std::ofstream &file) const;
@@ -47,4 +28,5 @@ public:
 };
 
 
+void load(std::ifstream &file, std::unordered_map<int, CompressorStation> &c_ss);
 void add_compressorStation(std::unordered_map<int, CompressorStation> &c_ss);

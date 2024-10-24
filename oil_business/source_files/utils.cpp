@@ -7,7 +7,7 @@
 using namespace std;
 
 
-int valid_int(std::string message, int min_value, int max_value){
+int valid_int(const std::string message, const int min_value, const int max_value){
     int value;
 
     while ((cin >> value).fail() 
@@ -22,7 +22,7 @@ int valid_int(std::string message, int min_value, int max_value){
 }
 
 
-void save_obj(unordered_map<int, Pipe> &pipes, unordered_map<int, CompressorStation> &c_ss){
+void save_obj(const unordered_map<int, Pipe> &pipes, const unordered_map<int, CompressorStation> &c_ss){
     ofstream file("static/output.txt");
     if (file.is_open()){
         if (pipes.empty()) {
@@ -45,26 +45,26 @@ void save_obj(unordered_map<int, Pipe> &pipes, unordered_map<int, CompressorStat
 }
 
 
-// void load_obj(Pipe &pipe, CompressorStation &compressor_station){
-//     ifstream file("static/output.txt");
+void load_obj(std::unordered_map<int, Pipe> &pipes, std::unordered_map<int, CompressorStation> &c_ss){
+    ifstream file("static/output.txt");
 
-//     if (file.is_open()){
-//         string line;
-//         file >> line;
+    if (file.is_open()){
+        string line;
 
-//         if (line=="Pipe"){
-//             load(file, pipe);
-//         } else cout << "Pipe cant created from file!" << endl;
+        while (file >> line){
+            if (line=="Pipe"){
+                load(file, pipes);
+            }
 
-//         file >> line;
-//         if (line == "CS"){
-//             load(file, compressor_station);
-//         } else cout << "CS cant created from file!" << endl;
-
-//     } else cout << "file not created!" << endl;
+            if (line=="CS"){
+                load(file, c_ss);
+            }
+        }
     
-//     file.close();
-// }
+        file.close();
+    }
+}
+
 
 void see_all_objects(const unordered_map<int, Pipe> &pipes, const unordered_map<int, CompressorStation> &c_ss){
     if (pipes.empty()) {

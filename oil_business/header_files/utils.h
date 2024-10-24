@@ -1,10 +1,15 @@
 #pragma once
+#include <iostream>
 
 
-void save_obj(std::unordered_map<int, Pipe> &pipes, std::unordered_map<int, CompressorStation> &c_ss);
+#define INPUT_LINE(in, str) in.ignore(1000, '\n'); \
+                            getline(in>>std::ws, str);
 
-void load_obj(Pipe &pipe, CompressorStation &compressor_station);
 
-int valid_int(std::string message, int min_value, int max_value);
+void save_obj(const std::unordered_map<int, Pipe> &pipes, const std::unordered_map<int, CompressorStation> &c_ss);
+
+void load_obj(std::unordered_map<int, Pipe> &pipes, std::unordered_map<int, CompressorStation> &c_ss);
+
+int valid_int(const std::string message, const int min_value, const int max_value);
 
 void see_all_objects(const std::unordered_map<int, Pipe> &pipes, const std::unordered_map<int, CompressorStation> &c_ss);
