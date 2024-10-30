@@ -23,7 +23,13 @@ int valid_int(const std::string message, const int min_value, const int max_valu
 
 
 void save_obj(const unordered_map<int, Pipe> &pipes, const unordered_map<int, CompressorStation> &c_ss){
-    ofstream file("static/output.txt");
+    string path_to_file;
+
+    cout << "file name: ";
+    INPUT_LINE(cin, path_to_file);
+
+    ofstream file("static/" + path_to_file);
+
     if (file.is_open()){
         if (pipes.empty()) {
             cout << "No pipes" << endl;
@@ -40,13 +46,23 @@ void save_obj(const unordered_map<int, Pipe> &pipes, const unordered_map<int, Co
                 cs.second.save(file);
             }
         }
+
+        file.close();
+
+    } else {
+        cout << "Error opening file!" << endl;
     }
-    file.close();
+    
 }
 
 
 void load_obj(std::unordered_map<int, Pipe> &pipes, std::unordered_map<int, CompressorStation> &c_ss){
-    ifstream file("static/output.txt");
+    string path_to_file;
+
+    cout << "file name: ";
+    INPUT_LINE(cin, path_to_file);
+
+    ifstream file("static/" + path_to_file);
 
     if (file.is_open()){
         string line;
@@ -62,6 +78,8 @@ void load_obj(std::unordered_map<int, Pipe> &pipes, std::unordered_map<int, Comp
         }
     
         file.close();
+    } else {
+        cout << "Error opening file!" << endl;
     }
 }
 
