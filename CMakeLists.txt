@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.30)
 project(oil_business)
 
 set(Boost_USE_STATIC_LIBS OFF)
@@ -16,6 +16,7 @@ set(SRC_LIST
     ${SRC_DIR}/compressor_station.cpp 
     ${SRC_DIR}/menu.cpp 
     ${SRC_DIR}/utils.cpp
+    ${SRC_DIR}/pipes_func.cpp
     )
 
 add_executable(${PROJECT_NAME}.exe ${SRC_LIST})

@@ -1,9 +1,12 @@
 #include <iostream>
 #include "../header_files/pipe.h"
+#include "../header_files/pipes_func.h"
 #include "../header_files/compressor_station.h"
 #include "../header_files/menu.h"
 #include "../header_files/utils.h"
+#include "../header_files/filter.h"
 #include <unordered_map>
+#include <unordered_set>
 
 using namespace std;
 
@@ -29,7 +32,84 @@ void print_pipes_menu(){
 }
 
 
-void pipes_menu(unordered_map<int, Pipe> &pipes){
+void print_select_pipes_menu(){
+    cout << "-----Menu select pipe-----\n";
+    cout << "0 - back\n";
+    cout << "1 - see selected pipes\n";
+    cout << "2 - select all pipes\n";
+    cout << "3 - select from filter\n";
+    cout << "4 - remove from selected\n";
+    cout << "--------------\n";
+}
+
+
+void print_filter_pipe(){
+    cout << "-----Menu filter pipe-----\n";
+    cout << "*new selections are added to the old ones*\n";
+    cout << "0 - back\n";
+    cout << "1 - select by id\n";
+    cout << "--------------\n";
+}
+
+
+void select_pipes_menu(unordered_map<int, Pipe> &pipes, unordered_set<int> &selected_pipes){
+    while (true){
+        print_select_pipes_menu();
+
+        int choice = valid_int("input number: ", 0, 4);
+
+        switch (choice)
+        {
+        case 0:
+            return;
+        case 1:
+            print_selected(pipes, selected_pipes);
+            break;
+        case 2:
+            break;
+        case 3:
+            filter_pipe_menu(pipes, selected_pipes);
+            break;
+        case 4:
+            CLEAR_SELECTED(selected_pipes);
+            break;
+        default:
+            cout << "You choose the number, that not exist!\n";
+            break;
+        }
+    }
+}
+
+
+void filter_pipe_menu(unordered_map<int, Pipe> &pipes, unordered_set<int> &selected_pipes){
+    while (true){
+        print_filter_pipe();
+
+        int choice = valid_int("input number: ", 0, 4);
+
+        switch (choice)
+        {
+        case 0:
+            return;
+        case 1:
+            selectByID(pipes, selected_pipes);
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            CLEAR_SELECTED(selected_pipes);
+            break;
+        default:
+            cout << "You choose the number, that not exist!\n";
+            break;
+        }
+    }
+}
+
+
+void pipes_menu(unordered_map<int, Pipe> &pipes, unordered_set<int> &selected_pipes){
     while (true){
         print_pipes_menu();
 
@@ -43,6 +123,7 @@ void pipes_menu(unordered_map<int, Pipe> &pipes){
             add_pipe(pipes);
             break;
         case 2:
+            select_pipes_menu(pipes, selected_pipes);
             break;
         default:
             cout << "You choose the number, that not exist!\n";
@@ -86,6 +167,9 @@ void main_menu(){
     unordered_map<int, Pipe> pipes;
     unordered_map<int, CompressorStation> c_ss;
 
+    unordered_set<int> selected_pipes;
+    unordered_set<int> selected_css;
+
     while (true){
         print_main_menu();
 
@@ -97,7 +181,7 @@ void main_menu(){
             cout << "Goodbye!\n";
             return;
         case 1:
-            pipes_menu(pipes);
+            pipes_menu(pipes, selected_pipes);
             break;
         case 2:
             CS_menu(c_ss);

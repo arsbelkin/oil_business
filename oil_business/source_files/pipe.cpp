@@ -17,7 +17,7 @@ Pipe::Pipe(){
     this->id = Pipe::current_pipeID++;
     cout << "id: " << this->id << endl;
 
-    cout << "name:";
+    cout << "name: ";
     INPUT_LINE(cin, this->name);
 
     cout << "lenght: ";
@@ -46,6 +46,10 @@ Pipe::Pipe(std::ifstream &file){
 
 int Pipe::get_id() const{
     return this->id;
+}
+
+int Pipe::get_currentId(){
+    return Pipe::current_pipeID;
 }
 
 
@@ -81,16 +85,4 @@ void Pipe::save(ofstream &file) const{
     file << this->diameter << endl;
     file << this->is_working << endl;
     cout << "Pipe save in file!\n";
-}
-
-
-void load(std::ifstream &file, unordered_map<int, Pipe> &pipes){
-    Pipe pipe(file);
-    pipes.emplace(pipe.get_id(), pipe);
-}
-
-
-void add_pipe(unordered_map<int, Pipe> &pipes){
-    Pipe pipe;
-    pipes.emplace(pipe.get_id(), pipe);
 }
