@@ -17,6 +17,7 @@ set(SRC_LIST
     ${SRC_DIR}/menu.cpp 
     ${SRC_DIR}/utils.cpp
     ${SRC_DIR}/pipes_func.cpp
+    ${SRC_DIR}/filter.cpp
     )
 
 add_executable(${PROJECT_NAME}.exe ${SRC_LIST})

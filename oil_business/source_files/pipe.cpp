@@ -43,13 +43,23 @@ Pipe::Pipe(std::ifstream &file){
     file >> this->is_working;
 }
 
+int Pipe::get_currentId(){
+    return Pipe::current_pipeID;
+}
+
 
 int Pipe::get_id() const{
     return this->id;
 }
 
-int Pipe::get_currentId(){
-    return Pipe::current_pipeID;
+
+std::string Pipe::get_name() const{
+    return this->name;
+}
+
+
+bool Pipe::get_IsWorking() const{
+    return this->is_working;
 }
 
 

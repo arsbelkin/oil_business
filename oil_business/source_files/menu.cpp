@@ -36,7 +36,7 @@ void print_select_pipes_menu(){
     cout << "-----Menu select pipe-----\n";
     cout << "0 - back\n";
     cout << "1 - see selected pipes\n";
-    cout << "2 - select all pipes\n";
+    cout << "2 - edit selected pipes\n";
     cout << "3 - select from filter\n";
     cout << "4 - remove from selected\n";
     cout << "--------------\n";
@@ -47,7 +47,10 @@ void print_filter_pipe(){
     cout << "-----Menu filter pipe-----\n";
     cout << "*new selections are added to the old ones*\n";
     cout << "0 - back\n";
-    cout << "1 - select by id\n";
+    cout << "1 - select all pipes\n";
+    cout << "2 - select by id\n";
+    cout << "3 - select by name\n";
+    cout << "4 - select by work status\n";
     cout << "--------------\n";
 }
 
@@ -92,14 +95,16 @@ void filter_pipe_menu(unordered_map<int, Pipe> &pipes, unordered_set<int> &selec
         case 0:
             return;
         case 1:
-            selectByID(pipes, selected_pipes);
+            selectAll(pipes, selected_pipes);
             break;
         case 2:
+            selectByID(pipes, selected_pipes);
             break;
         case 3:
+            findByName(pipes, selected_pipes);
             break;
         case 4:
-            CLEAR_SELECTED(selected_pipes);
+            findByIsWorking(pipes, selected_pipes);
             break;
         default:
             cout << "You choose the number, that not exist!\n";
