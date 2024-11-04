@@ -97,12 +97,6 @@ void CompressorStation::save(ofstream &file) const{
 }
 
 
-void load(std::ifstream &file, std::unordered_map<int, CompressorStation> &c_ss){
-    CompressorStation compressor_station(file);
-    c_ss.emplace(compressor_station.get_id(), compressor_station);
-}
-
-
 void add_compressorStation(unordered_map<int, CompressorStation> &c_ss){
     CompressorStation compressor_station;
     c_ss.emplace(compressor_station.get_id(), compressor_station);

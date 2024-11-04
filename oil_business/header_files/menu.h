@@ -1,5 +1,6 @@
 #pragma once
 #include <unordered_set>
+#include <unordered_map>
 
 
 void print_main_menu();
@@ -16,7 +17,7 @@ void pipes_menu(std::unordered_map<int, Pipe> &pipes, std::unordered_set<int> &s
 
 void print_CS_menu();
 
-void CS_menu(std::unordered_map<int, CompressorStation> &c_ss);
+void CS_menu(std::unordered_map<int, CompressorStation> &c_ss, std::unordered_set<int> &selected_css);
 
 void print_filter_pipe();
 

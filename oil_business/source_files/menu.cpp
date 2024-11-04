@@ -169,7 +169,7 @@ void pipes_menu(unordered_map<int, Pipe> &pipes, unordered_set<int> &selected_pi
         case 0:
             return;
         case 1:
-            add_pipe(pipes);
+            add_obj(pipes);
             break;
         case 2:
             select_pipes_menu(pipes, selected_pipes);
@@ -183,15 +183,17 @@ void pipes_menu(unordered_map<int, Pipe> &pipes, unordered_set<int> &selected_pi
 
 
 void print_CS_menu(){
-    cout << "-----Menu CS-----\n";
+    cout << endl;
+    cout << endl;
+    cout << "-----Menu C Station-----\n";
     cout << "0 - back\n";
-    cout << "1 - add compressor station\n";
-    cout << "2 - select compressor stations\n";
+    cout << "1 - add C Station\n";
+    cout << "2 - select C Station\n";
     cout << "--------------\n";
 }
 
 
-void CS_menu(unordered_map<int, CompressorStation> &c_ss){
+void CS_menu(std::unordered_map<int, CompressorStation> &c_ss, std::unordered_set<int> &selected_css){
     while (true){
         print_CS_menu();
 
@@ -203,6 +205,9 @@ void CS_menu(unordered_map<int, CompressorStation> &c_ss){
             return;
         case 1:
             add_compressorStation(c_ss);
+            break;
+        case 2:
+            
             break;
         default:
             cout << "You choose the number, that not exist!\n";
@@ -234,7 +239,7 @@ void main_menu(){
             pipes_menu(pipes, selected_pipes);
             break;
         case 2:
-            CS_menu(c_ss);
+            CS_menu(c_ss, selected_css);
             break;
         case 3:
             see_all_objects(pipes, c_ss);

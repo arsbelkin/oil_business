@@ -77,7 +77,7 @@ void selectAll(const std::unordered_map<int, T> &obj, std::unordered_set<int> &s
 template<typename T>
 void delete_selectedObj(std::unordered_map<int, T> &obj, std::unordered_set<int> &selected_obj){
     for (auto it = selected_obj.begin(); it != selected_obj.end();){
-        erase_pipe(obj, *it);
+        erase_obj(obj, *it);
         it = selected_obj.erase(it);
     }
 }

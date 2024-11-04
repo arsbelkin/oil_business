@@ -27,6 +27,4 @@ public:
     friend std::ostream& operator << (std::ostream &os, const CompressorStation &compressor_station);
 };
 
-
-void load(std::ifstream &file, std::unordered_map<int, CompressorStation> &c_ss);
 void add_compressorStation(std::unordered_map<int, CompressorStation> &c_ss);
