@@ -12,6 +12,8 @@ using namespace std;
 
 
 void print_main_menu(){
+    cout << endl;
+    cout << endl;
     cout << "-----Menu-----\n";
     cout << "0 - exit\n";
     cout << "1 - pipes actions\n";
@@ -24,6 +26,8 @@ void print_main_menu(){
 
 
 void print_pipes_menu(){
+    cout << endl;
+    cout << endl;
     cout << "-----Menu pipe-----\n";
     cout << "0 - back\n";
     cout << "1 - add pipe\n";
@@ -33,6 +37,8 @@ void print_pipes_menu(){
 
 
 void print_select_pipes_menu(){
+    cout << endl;
+    cout << endl;
     cout << "-----Menu select pipe-----\n";
     cout << "0 - back\n";
     cout << "1 - see selected pipes\n";
@@ -44,6 +50,8 @@ void print_select_pipes_menu(){
 
 
 void print_filter_pipe(){
+    cout << endl;
+    cout << endl;
     cout << "-----Menu filter pipe-----\n";
     cout << "*new selections are added to the old ones*\n";
     cout << "0 - back\n";
@@ -69,6 +77,7 @@ void select_pipes_menu(unordered_map<int, Pipe> &pipes, unordered_set<int> &sele
             print_selected(pipes, selected_pipes);
             break;
         case 2:
+            edit_pipes_menu(pipes, selected_pipes);
             break;
         case 3:
             filter_pipe_menu(pipes, selected_pipes);
@@ -105,6 +114,41 @@ void filter_pipe_menu(unordered_map<int, Pipe> &pipes, unordered_set<int> &selec
             break;
         case 4:
             findByIsWorking(pipes, selected_pipes);
+            break;
+        default:
+            cout << "You choose the number, that not exist!\n";
+            break;
+        }
+    }
+}
+
+
+void print_edit_pipe_menu(){
+    cout << endl;
+    cout << endl;
+    cout << "-----Menu edit pipe-----\n";
+    cout << "0 - back\n";
+    cout << "1 - change work status for selected pipes\n";
+    cout << "2 - delete selected pipes\n";
+    cout << "--------------\n";
+}
+
+
+void edit_pipes_menu(unordered_map<int, Pipe> &pipes, unordered_set<int> &selected_pipes){
+    while (true){
+        print_edit_pipe_menu();
+
+        int choice = valid_int("input number: ", 0, 2);
+
+        switch (choice)
+        {
+        case 0:
+            return;
+        case 1:
+            change_selectedPipes_workStatus(pipes, selected_pipes);
+            break;
+        case 2:
+            delete_selectedObj(pipes, selected_pipes);
             break;
         default:
             cout << "You choose the number, that not exist!\n";
@@ -183,6 +227,7 @@ void main_menu(){
         switch (choice)
         {
         case 0:
+            cout << endl;
             cout << "Goodbye!\n";
             return;
         case 1:

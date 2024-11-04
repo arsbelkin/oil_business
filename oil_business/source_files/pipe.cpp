@@ -69,8 +69,9 @@ string Pipe::work_to_string() const{
 
 
 void Pipe::edit_work_status(){
-    cout << "New working status(0 - no / 1 - yes): ";
-    this->is_working = valid_int("New working status(0 - no / 1 - yes): ", 0, 1);
+    // cout << "New working status(0 - no / 1 - yes): ";
+    // this->is_working = valid_int("New working status(0 - no / 1 - yes): ", 0, 1);
+    this->is_working = !this->is_working;
     cout << "New working status is set!" << endl;
 }
 

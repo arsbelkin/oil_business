@@ -21,3 +21,7 @@ void CS_menu(std::unordered_map<int, CompressorStation> &c_ss);
 void print_filter_pipe();
 
 void filter_pipe_menu(std::unordered_map<int, Pipe> &pipes, std::unordered_set<int> &selected_pipes);
+
+void print_edit_pipe_menu();
+
+void edit_pipes_menu(std::unordered_map<int, Pipe> &pipes, std::unordered_set<int> &selected_pipes);
