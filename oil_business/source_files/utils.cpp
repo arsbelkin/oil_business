@@ -3,7 +3,8 @@
 #include "../header_files/pipes_func.h"
 #include "../header_files/compressor_station.h"
 #include "../header_files/utils.h"
-#include "fstream"
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -59,28 +60,34 @@ void save_obj(const unordered_map<int, Pipe> &pipes, const unordered_map<int, Co
 
 void load_obj(std::unordered_map<int, Pipe> &pipes, std::unordered_map<int, CompressorStation> &c_ss){
     string path_to_file;
-
-    cout << "file name: ";
-    INPUT_LINE(cin, path_to_file);
-
-    ifstream file("static/" + path_to_file);
-
-    if (file.is_open()){
-        string line;
-
-        while (file >> line){
-            if (line=="Pipe"){
-                load(file, pipes);
-            }
-
-            if (line=="CS"){
-                load(file, c_ss);
-            }
-        }
+    string line;
     
-        file.close();
-    } else {
-        cout << "Error opening file!" << endl;
+    cout << "files name: ";
+    INPUT_LINE(cin, line);
+
+    istringstream iss(line);
+    ifstream file;
+
+    while (iss >> path_to_file){
+        file.open("static/" + path_to_file);
+
+        if (file.is_open()){
+            string line;
+
+            while (file >> line){
+                if (line=="Pipe"){
+                    load(file, pipes);
+                }
+
+                if (line=="CS"){
+                    load(file, c_ss);
+                }
+            }
+        
+            file.close();
+        } else {
+            cout << "Error opening file!" << endl;
+        }
     }
 }
 

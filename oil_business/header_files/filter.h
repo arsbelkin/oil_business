@@ -14,12 +14,13 @@ using Filter = bool(*)(const T &obj, const K param);
 
 template<typename T>
 void selectByID(const std::unordered_map<int, T> &obj, std::unordered_set<int> &selected_obj){
-    std::cout << "input ids: ";
-
     std::string line;
-    INPUT_LINE(std::cin, line);
-    std::istringstream iss(line);
     int id;
+
+    std::cout << "input ids: ";
+    INPUT_LINE(std::cin, line);
+
+    std::istringstream iss(line);
 
     while (true){
         if ((iss >> id) && (obj.count(id) > 0)) {
