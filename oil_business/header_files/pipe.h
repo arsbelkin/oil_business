@@ -18,7 +18,7 @@ public:
 
     static int get_currentId();
     int get_id() const;
-    std::string get_name() const; 
+    std::string get_name() const;
     bool get_IsWorking() const;
     
     std::string work_to_string() const;

@@ -19,12 +19,14 @@ public:
     CompressorStation();
     CompressorStation(std::ifstream &file);
 
-    void calc_workload();
-    void edit_workshop_status();
-    void save(std::ofstream &file) const;
+    static int get_currentId();
     int get_id() const;
+    std::string get_name() const;
+    float get_workload() const;
+
+    void calc_workload();
+    void edit_workshop_status(int choice);
+    void save(std::ofstream &file) const;
 
     friend std::ostream& operator << (std::ostream &os, const CompressorStation &compressor_station);
 };
-
-void add_compressorStation(std::unordered_map<int, CompressorStation> &c_ss);

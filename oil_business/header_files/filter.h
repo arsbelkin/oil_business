@@ -81,3 +81,8 @@ void delete_selectedObj(std::unordered_map<int, T> &obj, std::unordered_set<int>
         it = selected_obj.erase(it);
     }
 }
+
+
+bool checkByUnusedWorkshops(const CompressorStation &compressor_station, const float unused_workshops);
+
+void findByUnusedWorkshops(const std::unordered_map<int, CompressorStation> &c_ss, std::unordered_set<int> &selected_css);

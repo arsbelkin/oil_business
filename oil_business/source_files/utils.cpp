@@ -9,21 +9,6 @@
 using namespace std;
 
 
-int valid_int(const std::string message, const int min_value, const int max_value){
-    int value;
-
-    while ((cin >> value).fail() 
-            || cin.peek() != '\n'
-            || value < min_value || value > max_value)
-    {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << message;
-    }
-    return value;
-}
-
-
 void save_obj(const unordered_map<int, Pipe> &pipes, const unordered_map<int, CompressorStation> &c_ss){
     string path_to_file;
 

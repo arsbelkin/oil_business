@@ -13,11 +13,24 @@
                                 std::cout << "Selected cleared!" << std::endl;
 
 
+template <typename T>
+T GetCorrectNumber(const std::string message, const int min_value, const int max_value){
+    T value;
+
+    while ((std::cin >> value).fail() 
+            || std::cin.peek() != '\n'
+            || value < min_value || value > max_value)
+    {
+        std::cin.clear();
+        std::cin.ignore(10000, '\n');
+        std::cout << message;
+    }
+    return value;
+}
+
 void save_obj(const std::unordered_map<int, Pipe> &pipes, const std::unordered_map<int, CompressorStation> &c_ss);
 
 void load_obj(std::unordered_map<int, Pipe> &pipes, std::unordered_map<int, CompressorStation> &c_ss);
-
-int valid_int(const std::string message, const int min_value, const int max_value);
 
 void see_all_objects(const std::unordered_map<int, Pipe> &pipes, const std::unordered_map<int, CompressorStation> &c_ss);
 
