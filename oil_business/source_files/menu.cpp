@@ -6,10 +6,14 @@
 #include "../header_files/menu.h"
 #include "../header_files/utils.h"
 #include "../header_files/filter.h"
+#include "../header_files/logger.h"
 #include <unordered_map>
 #include <unordered_set>
+#include <chrono>
+#include <format>
 
 using namespace std;
+using namespace chrono;
 
 
 // pipe menu
@@ -329,6 +333,8 @@ void print_main_menu(){
 };
 
 void main_menu(){
+    Logger logger("log_" + std::string(std::format("{:%d_%m_%Y %H_%M_%OS}", system_clock::now())) + ".txt");
+
     unordered_map<int, Pipe> pipes;
     unordered_map<int, CompressorStation> c_ss;
 

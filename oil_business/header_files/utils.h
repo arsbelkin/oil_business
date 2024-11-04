@@ -1,12 +1,14 @@
 #pragma once
 #include <iostream>
 #include <unordered_set>
+#include <unordered_map>
 #include <typeinfo>
 #include <string>
 
 
 #define INPUT_LINE(in, str) in.ignore(1000, '\n'); \
-                            getline(in>>std::ws, str);
+                            getline(in>>std::ws, str); \
+                            std::cerr << str << std::endl;
 
 
 #define CLEAR_SELECTED(selected) selected.clear(); \
@@ -25,6 +27,7 @@ T GetCorrectNumber(const std::string message, const int min_value, const int max
         std::cin.ignore(10000, '\n');
         std::cout << message;
     }
+    std::cerr << value << std::endl;
     return value;
 }
 
