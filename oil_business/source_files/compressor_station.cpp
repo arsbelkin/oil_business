@@ -38,7 +38,8 @@ CompressorStation::CompressorStation(){
 
 CompressorStation::CompressorStation(std::ifstream &file){
     this->id = CompressorStation::current_csID++;
-    INPUT_LINE(file, this->name);
+    file.ignore(10000, '\n');
+    getline(file>>std::ws, this->name);
     file >> this->number_of_workshops;
     file >> this->workshops_in_work;
     this->calc_workload();

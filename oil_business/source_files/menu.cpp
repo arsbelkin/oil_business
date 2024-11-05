@@ -333,7 +333,7 @@ void print_main_menu(){
 };
 
 void main_menu(){
-    Logger logger("log_" + std::string(std::format("{:%d_%m_%Y %H_%M_%OS}", system_clock::now())) + ".txt");
+    Logger logger("log_" + std::string(std::format("{:%d_%m_%Y_%H_%M}", system_clock::now())) + ".txt");
 
     unordered_map<int, Pipe> pipes;
     unordered_map<int, CompressorStation> c_ss;

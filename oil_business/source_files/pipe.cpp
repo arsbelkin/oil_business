@@ -37,7 +37,8 @@ Pipe::Pipe(){
 
 Pipe::Pipe(std::ifstream &file){
     this->id = Pipe::current_pipeID++;
-    INPUT_LINE(file, this->name);
+    file.ignore(10000, '\n');
+    getline(file>>std::ws, this->name);
     file >> this->length;
     file >> this->diameter;
     file >> this->is_working;
