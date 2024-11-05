@@ -71,7 +71,6 @@ string Pipe::work_to_string() const{
 
 void Pipe::edit_work_status(){
     this->is_working = !this->is_working;
-    cout << "New working status is set!" << endl;
 }
 
 
@@ -94,5 +93,4 @@ void Pipe::save(ofstream &file) const{
     file << this->length << endl;
     file << this->diameter << endl;
     file << this->is_working << endl;
-    cout << "Pipe save in file!\n";
 }

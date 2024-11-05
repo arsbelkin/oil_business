@@ -11,6 +11,7 @@ using namespace std;
 
 void save_obj(const unordered_map<int, Pipe> &pipes, const unordered_map<int, CompressorStation> &c_ss){
     string path_to_file;
+    int counter = 0;
 
     cout << "file name: ";
     INPUT_LINE(cin, path_to_file);
@@ -23,6 +24,7 @@ void save_obj(const unordered_map<int, Pipe> &pipes, const unordered_map<int, Co
         } else {
             for (auto& [_, pipe]: pipes){
                 pipe.save(file);
+                ++counter;
             }
         }
 
@@ -31,11 +33,13 @@ void save_obj(const unordered_map<int, Pipe> &pipes, const unordered_map<int, Co
         } else {
             for (auto& cs: c_ss){
                 cs.second.save(file);
+                ++counter;
             }
         }
 
         file.close();
 
+        cout << counter << " objects was saved!" << endl;
     } else {
         cout << "Error opening file!" << endl;
     }
@@ -46,6 +50,7 @@ void save_obj(const unordered_map<int, Pipe> &pipes, const unordered_map<int, Co
 void load_obj(std::unordered_map<int, Pipe> &pipes, std::unordered_map<int, CompressorStation> &c_ss){
     string path_to_file;
     string line;
+    int counter = 0;
     
     cout << "files name: ";
     INPUT_LINE(cin, line);
@@ -62,18 +67,22 @@ void load_obj(std::unordered_map<int, Pipe> &pipes, std::unordered_map<int, Comp
             while (file >> line){
                 if (line=="Pipe"){
                     load(file, pipes);
+                    ++counter;
                 }
 
                 if (line=="CS"){
                     load(file, c_ss);
+                    ++counter;
                 }
             }
         
-            file.close();
+            file.close();            
         } else {
             cout << "Error opening file!" << endl;
         }
     }
+
+    cout << counter << " objects was added!" << endl;
 }
 
 

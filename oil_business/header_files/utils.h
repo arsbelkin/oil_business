@@ -42,9 +42,8 @@ template<typename T>
 void erase_obj(std::unordered_map<int, T> &objs, const int id){
     if (objs.count(id)){
         objs.erase(id);
-        std::cout << std::string(typeid(T).name()).substr(1) << " " << id << " erased!" << std::endl;
     } else {
-        std::cout << "There is not "<< (std::string)typeid(T).name() << " with this id!" << std::endl;
+        std::cout << "There is not object with id " << id << std::endl;
     }
 }
 

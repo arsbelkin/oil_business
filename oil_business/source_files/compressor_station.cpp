@@ -94,8 +94,6 @@ void CompressorStation::edit_workshop_status(int choice){
         };
     };
     this->calc_workload();
-    cout << "New worksop status is set\n";
-    cout << "Now eff = " << PRINT_WORKLOAD(this->) << endl;
 }
 
 
@@ -105,5 +103,4 @@ void CompressorStation::save(ofstream &file) const{
     file << this->number_of_workshops << endl;
     file << this->workshops_in_work << endl;
     file << PRINT_WORKLOAD(this->) << endl;
-    cout << "CS save in file!\n";
 }
