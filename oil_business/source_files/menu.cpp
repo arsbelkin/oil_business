@@ -58,7 +58,8 @@ void print_select_pipes_menu(){
     cout << "1 - see selected pipes\n";
     cout << "2 - edit selected pipes\n";
     cout << "3 - select from filter\n";
-    cout << "4 - remove from selected\n";
+    cout << "4 - choose ids from selected\n";
+    cout << "5 - remove from selected\n";
     cout << "--------------\n";
 }
 
@@ -66,7 +67,7 @@ void select_pipes_menu(unordered_map<int, Pipe> &pipes, unordered_set<int> &sele
     while (true){
         print_select_pipes_menu();
 
-        int choice = GetCorrectNumber<int>("input number: ", 0, 4);
+        int choice = GetCorrectNumber<int>("input number: ", 0, 5);
 
         switch (choice)
         {
@@ -82,6 +83,9 @@ void select_pipes_menu(unordered_map<int, Pipe> &pipes, unordered_set<int> &sele
             filter_pipe_menu(pipes, selected_pipes);
             break;
         case 4:
+            selected_pipes = selectByID(selected_pipes);
+            break;
+        case 5:
             CLEAR_SELECTED(selected_pipes);
             break;
         default:
@@ -118,7 +122,7 @@ void filter_pipe_menu(unordered_map<int, Pipe> &pipes, unordered_set<int> &selec
             selectAll(pipes, selected_pipes);
             break;
         case 2:
-            selectByID(pipes, selected_pipes);
+            selected_pipes = selectByID(pipes);
             break;
         case 3:
             findByName(pipes, selected_pipes);
@@ -209,7 +213,8 @@ void print_select_CS_menu(){
     cout << "1 - see selected CS\n";
     cout << "2 - edit selected CS\n";
     cout << "3 - select from filter\n";
-    cout << "4 - remove from selected\n";
+    cout << "4 - choose ids from selected\n";
+    cout << "5 - remove from selected\n";
     cout << "--------------\n";
 }
 
@@ -233,6 +238,9 @@ void select_CS_menu(unordered_map<int, CompressorStation> &c_ss, unordered_set<i
             filter_CS_menu(c_ss, selected_css);
             break;
         case 4:
+            selected_css = selectByID(selected_css);
+            break;
+        case 5:
             CLEAR_SELECTED(selected_css);
             break;
         default:
@@ -269,7 +277,7 @@ void filter_CS_menu(unordered_map<int, CompressorStation> &c_ss, unordered_set<i
             selectAll(c_ss, selected_css);
             break;
         case 2:
-            selectByID(c_ss, selected_css);
+            selected_css = selectByID(c_ss);
             break;
         case 3:
             findByName(c_ss, selected_css);
@@ -336,9 +344,9 @@ void main_menu(){
     Logger logger("log_" + std::string(std::format("{:%d_%m_%Y_%H_%M}", system_clock::now())) + ".txt");
 
     unordered_map<int, Pipe> pipes;
-    unordered_map<int, CompressorStation> c_ss;
-
     unordered_set<int> selected_pipes;
+
+    unordered_map<int, CompressorStation> c_ss;
     unordered_set<int> selected_css;
 
     while (true){
@@ -365,7 +373,7 @@ void main_menu(){
             save_obj(pipes, c_ss);
             break;
         case 5:
-            load_obj(pipes, c_ss);
+            load_obj(pipes, c_ss, selected_pipes, selected_css);
             break;
         default:
             cout << "You choose the number, that not exist!\n";

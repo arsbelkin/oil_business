@@ -47,39 +47,40 @@ void save_obj(const unordered_map<int, Pipe> &pipes, const unordered_map<int, Co
 }
 
 
-void load_obj(std::unordered_map<int, Pipe> &pipes, std::unordered_map<int, CompressorStation> &c_ss){
-    string path_to_file;
-    string line;
+void load_obj(std::unordered_map<int, Pipe> &pipes, std::unordered_map<int, CompressorStation> &c_ss, std::unordered_set<int> &selected_pipe, std::unordered_set<int> &selected_css){
+    string path_to_file="-1";
     int counter = 0;
     
-    cout << "files name: ";
-    INPUT_LINE(cin, line);
+    cout << "file name: ";
+    INPUT_LINE(cin, path_to_file)
+    ifstream file("static/" + path_to_file);
 
-    istringstream iss(line);
-    ifstream file;
+    if (file.is_open()){
+        pipes.clear();
+        selected_pipe.clear();
+        Pipe::clear_currentID();
 
-    while (iss >> path_to_file){
-        file.open("static/" + path_to_file);
+        c_ss.clear();
+        selected_css.clear();
+        CompressorStation::clear_currentID();
 
-        if (file.is_open()){
-            string line;
+        string line;
 
-            while (file >> line){
-                if (line=="Pipe"){
-                    load(file, pipes);
-                    ++counter;
-                }
-
-                if (line=="CS"){
-                    load(file, c_ss);
-                    ++counter;
-                }
+        while (file >> line){
+            if (line=="Pipe"){
+                load(file, pipes);
+                ++counter;
             }
-        
-            file.close();            
-        } else {
-            cout << "Error opening file!" << endl;
+
+            if (line=="CS"){
+                load(file, c_ss);
+                ++counter;
+            }
         }
+    
+        file.close();            
+    } else {
+        cout << "Error opening file!" << endl;
     }
 
     cout << counter << " objects was added!" << endl;

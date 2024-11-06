@@ -8,7 +8,7 @@
 using namespace std;
 
 
-int CompressorStation::current_csID = 0;
+int CompressorStation::current_csID = 1;
 
 
 CompressorStation::CompressorStation(){
@@ -26,7 +26,7 @@ CompressorStation::CompressorStation(){
     cout << "workshops in work: ";
     this->workshops_in_work = GetCorrectNumber<int>("workshops in work: ", 0, this->number_of_workshops);
 
-    cout << "efficiency: ";
+    cout << "workload: ";
     calc_workload();
     cout << PRINT_WORKLOAD(this->) << endl;
 
@@ -37,7 +37,8 @@ CompressorStation::CompressorStation(){
 
 
 CompressorStation::CompressorStation(std::ifstream &file){
-    this->id = CompressorStation::current_csID++;
+    file >> this->id;
+    ++CompressorStation::current_csID;
     file.ignore(10000, '\n');
     getline(file>>std::ws, this->name);
     file >> this->number_of_workshops;
@@ -58,6 +59,11 @@ int CompressorStation::get_id() const{
 
 std::string CompressorStation::get_name() const{
     return this->name;
+}
+
+
+void CompressorStation::clear_currentID(){
+    CompressorStation::current_csID = 1;
 }
 
 
@@ -99,6 +105,7 @@ void CompressorStation::edit_workshop_status(int choice){
 
 void CompressorStation::save(ofstream &file) const{
     file << "CS" << endl;
+    file << this->id << endl;
     file << this->name << endl;
     file << this->number_of_workshops << endl;
     file << this->workshops_in_work << endl;

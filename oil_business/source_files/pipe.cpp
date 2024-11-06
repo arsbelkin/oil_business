@@ -8,7 +8,7 @@
 using namespace std;
 
 
-int Pipe::current_pipeID = 0;
+int Pipe::current_pipeID = 1;
 
 
 Pipe::Pipe(){
@@ -36,7 +36,8 @@ Pipe::Pipe(){
 
 
 Pipe::Pipe(std::ifstream &file){
-    this->id = Pipe::current_pipeID++;
+    file >> this->id;
+    ++Pipe::current_pipeID;
     file.ignore(10000, '\n');
     getline(file>>std::ws, this->name);
     file >> this->length;
@@ -61,6 +62,11 @@ std::string Pipe::get_name() const{
 
 bool Pipe::get_IsWorking() const{
     return this->is_working;
+}
+
+
+void Pipe::clear_currentID(){
+    Pipe::current_pipeID=1;
 }
 
 
@@ -89,6 +95,7 @@ ostream& operator << (ostream &os, const Pipe &pipe){
 
 void Pipe::save(ofstream &file) const{
     file << "Pipe" << endl;
+    file << this->id << endl;
     file << this->name << endl;
     file << this->length << endl;
     file << this->diameter << endl;

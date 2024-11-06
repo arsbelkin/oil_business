@@ -24,6 +24,8 @@ public:
     std::string get_name() const;
     float get_workload() const;
 
+    static void clear_currentID();
+
     void calc_workload();
     void edit_workshop_status(int choice);
     void save(std::ofstream &file) const;

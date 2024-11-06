@@ -33,7 +33,7 @@ T GetCorrectNumber(const std::string message, const int min_value, const int max
 
 void save_obj(const std::unordered_map<int, Pipe> &pipes, const std::unordered_map<int, CompressorStation> &c_ss);
 
-void load_obj(std::unordered_map<int, Pipe> &pipes, std::unordered_map<int, CompressorStation> &c_ss);
+void load_obj(std::unordered_map<int, Pipe> &pipes, std::unordered_map<int, CompressorStation> &c_ss, std::unordered_set<int> &selected_pipe, std::unordered_set<int> &selected_css);
 
 void see_all_objects(const std::unordered_map<int, Pipe> &pipes, const std::unordered_map<int, CompressorStation> &c_ss);
 

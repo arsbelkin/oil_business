@@ -20,6 +20,8 @@ public:
     int get_id() const;
     std::string get_name() const;
     bool get_IsWorking() const;
+
+    static void clear_currentID();
     
     std::string work_to_string() const;
     void edit_work_status();
