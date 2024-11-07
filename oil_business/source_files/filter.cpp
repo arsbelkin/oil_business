@@ -29,10 +29,3 @@ void findByUnusedWorkshops(const std::unordered_map<int, CompressorStation> &c_s
 
     findByFilter<CompressorStation, float>(c_ss, selected_css, checkByUnusedWorkshops, unused_wokshops);
 }
-
-
-// std::unordered_set<int> SelectSubSet(const std::unordered_set<int>& set){
-//     std::unordered_set<int> subset;
-//     selectByID(set, subset);
-//     return subset;
-// }
