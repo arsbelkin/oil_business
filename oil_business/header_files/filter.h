@@ -34,34 +34,52 @@ using Filter = bool(*)(const T &obj, const K param);
 //     }
 // }
 
+// template<typename T>
+// std::unordered_set<int> selectByID(const T &set){
+//     std::unordered_set<int> subset;
+
+//     std::string line;
+//     int id;
+
+//     std::cout << "input ids: ";
+//     INPUT_LINE(std::cin, line);
+
+//     std::istringstream iss(line);
+
+//     while (true){
+//         if ((iss >> id) && (set.contains(id))) {
+//             subset.emplace(id);
+//         } else {
+//             if (iss.eof()) break;
+//             iss.clear();
+//         }
+//     }
+
+//     return subset;
+// }
+
+
 template<typename T>
 std::unordered_set<int> selectByID(const T &set){
     std::unordered_set<int> subset;
-
-    std::string line;
     int id;
-
-    std::cout << "input ids: ";
-    INPUT_LINE(std::cin, line);
-
-    std::istringstream iss(line);
-
+    
     while (true){
-        if ((iss >> id) && (set.contains(id))) {
-            subset.emplace(id);
-        } else {
-            if (iss.eof()) break;
-            iss.clear();
-        }
-    }
+        std::cout << "input id(0 for exit): ";
+        id = GetCorrectNumber<int>("input correct id: ", 0, 1000);
 
-    return subset;
+        if (id == 0) return subset;
+
+        if (set.contains(id)) subset.emplace(id);
+        // if (id == -1) return subset;
+        // else subset.emplace(id);
+    }
 }
 
 
 template<typename T, typename K>
 bool checkByName(const T &obj, const K name){
-    return obj.get_name() == name;
+    return obj.get_name().find(name) != std::string::npos;
 }
 
 

@@ -1,4 +1,5 @@
 #pragma once
+#include <unordered_map>
 
 
 #define PRINT_WORKLOAD(elem) elem workload * 100 << "%"
@@ -25,6 +26,7 @@ public:
     float get_workload() const;
 
     static void clear_currentID();
+    static void set_currentID(const std::unordered_map<int, CompressorStation>& data);
 
     void calc_workload();
     void edit_workshop_status(int choice);

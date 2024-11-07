@@ -8,13 +8,13 @@
 using namespace std;
 
 
-int Pipe::current_pipeID = 1;
+int Pipe::current_pipeID = 0;
 
 
 Pipe::Pipe(){
     cout << "-----add pipe-----\n";
 
-    this->id = Pipe::current_pipeID++;
+    this->id = ++Pipe::current_pipeID;
     cout << "id: " << this->id << endl;
 
     cout << "name: ";
@@ -37,7 +37,6 @@ Pipe::Pipe(){
 
 Pipe::Pipe(std::ifstream &file){
     file >> this->id;
-    ++Pipe::current_pipeID;
     file.ignore(10000, '\n');
     getline(file>>std::ws, this->name);
     file >> this->length;
@@ -67,6 +66,11 @@ bool Pipe::get_IsWorking() const{
 
 void Pipe::clear_currentID(){
     Pipe::current_pipeID=1;
+}
+
+
+void Pipe::set_currentID(const unordered_map<int, Pipe>& data) {
+    Pipe::current_pipeID=get_maxKey(data);
 }
 
 

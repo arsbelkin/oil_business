@@ -8,13 +8,13 @@
 using namespace std;
 
 
-int CompressorStation::current_csID = 1;
+int CompressorStation::current_csID = 0;
 
 
 CompressorStation::CompressorStation(){
     cout << "---add compressor station---\n";
 
-    this->id = CompressorStation::current_csID++;
+    this->id = ++CompressorStation::current_csID;
     cout << "id: " << this->id << endl;
 
     cout << "name: ";
@@ -38,7 +38,6 @@ CompressorStation::CompressorStation(){
 
 CompressorStation::CompressorStation(std::ifstream &file){
     file >> this->id;
-    ++CompressorStation::current_csID;
     file.ignore(10000, '\n');
     getline(file>>std::ws, this->name);
     file >> this->number_of_workshops;
@@ -49,6 +48,11 @@ CompressorStation::CompressorStation(std::ifstream &file){
 
 int CompressorStation::get_currentId(){
     return CompressorStation::current_csID;
+}
+
+
+void CompressorStation::set_currentID(const std::unordered_map<int, CompressorStation>& data){
+    CompressorStation::current_csID = get_maxKey(data);
 }
 
 

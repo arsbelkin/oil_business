@@ -70,3 +70,12 @@ void add_obj(std::unordered_map<int, T> &objs){
     T obj;
     objs.emplace(obj.get_id(), obj);
 }
+
+template<typename T>
+int get_maxKey(const std::unordered_map<int, T> &objs){
+    int id=-1;
+    for (auto &[k,v]: objs){
+        if (k > id) id = k;
+    }
+    return id;
+}

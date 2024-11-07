@@ -19,6 +19,8 @@ void save_obj(const unordered_map<int, Pipe> &pipes, const unordered_map<int, Co
     ofstream file("static/" + path_to_file);
 
     if (file.is_open()){
+        file << Pipe::get_currentId();
+        file << CompressorStation::get_currentId();
         if (pipes.empty()) {
             cout << "No pipes" << endl;
         } else {
@@ -58,11 +60,9 @@ void load_obj(std::unordered_map<int, Pipe> &pipes, std::unordered_map<int, Comp
     if (file.is_open()){
         pipes.clear();
         selected_pipe.clear();
-        Pipe::clear_currentID();
-
+        
         c_ss.clear();
         selected_css.clear();
-        CompressorStation::clear_currentID();
 
         string line;
 
@@ -78,7 +78,10 @@ void load_obj(std::unordered_map<int, Pipe> &pipes, std::unordered_map<int, Comp
             }
         }
     
-        file.close();            
+        file.close();        
+        Pipe::set_currentID(pipes);
+        CompressorStation::set_currentID(c_ss);
+
     } else {
         cout << "Error opening file!" << endl;
     }

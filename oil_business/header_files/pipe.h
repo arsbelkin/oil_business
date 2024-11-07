@@ -1,4 +1,5 @@
 #pragma once
+#include <unordered_map>
 
 
 class Pipe{
@@ -22,6 +23,7 @@ public:
     bool get_IsWorking() const;
 
     static void clear_currentID();
+    static void set_currentID(const std::unordered_map<int, Pipe>& data);
     
     std::string work_to_string() const;
     void edit_work_status();

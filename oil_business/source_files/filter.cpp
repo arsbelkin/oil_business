@@ -19,7 +19,7 @@ void findByIsWorking(const std::unordered_map<int, Pipe> &pipes, std::unordered_
 
 
 bool checkByUnusedWorkshops(const CompressorStation &compressor_station, const float unused_workshops){
-    return (100 - compressor_station.get_workload() * 100) == unused_workshops;
+    return (100 - compressor_station.get_workload() * 100) > unused_workshops;
 }
 
 
