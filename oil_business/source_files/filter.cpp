@@ -5,7 +5,7 @@
 using namespace std;
 
 
-bool checkByIsWorking(const Pipe &pipe, const bool is_working){
+bool checkByIsWorking(const Pipe &pipe, const bool& is_working){
     return pipe.get_IsWorking() == is_working;
 }
 
@@ -18,7 +18,7 @@ void findByIsWorking(const std::unordered_map<int, Pipe> &pipes, std::unordered_
 }
 
 
-bool checkByUnusedWorkshops(const CompressorStation &compressor_station, const float unused_workshops){
+bool checkByUnusedWorkshops(const CompressorStation &compressor_station, const float& unused_workshops){
     return (100 - compressor_station.get_workload() * 100) > unused_workshops;
 }
 
@@ -28,4 +28,9 @@ void findByUnusedWorkshops(const std::unordered_map<int, CompressorStation> &c_s
     float unused_wokshops = GetCorrectNumber<float>("percent of unused workshops: ", {0, 1000000}, IsInRange);
 
     findByFilter<CompressorStation, float>(c_ss, selected_css, checkByUnusedWorkshops, unused_wokshops);
+}
+
+
+bool checkByDiameter(const Pipe &pipe, const int &diameter){
+    return pipe.get_diameter() == diameter;
 }

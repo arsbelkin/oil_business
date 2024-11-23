@@ -50,8 +50,8 @@ void see_all_objects(const std::unordered_map<int, Pipe> &pipes, const std::unor
 
 
 template<typename T>
-void erase_obj(std::unordered_map<int, T> &objs, const int id){
-    if (objs.count(id)){
+void erase_obj(T &objs, const int id){
+    if (objs.contains(id)){
         objs.erase(id);
     } else {
         std::cout << "There is not object with id " << id << std::endl;

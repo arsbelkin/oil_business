@@ -21,6 +21,7 @@ public:
     int get_id() const;
     std::string get_name() const;
     bool get_IsWorking() const;
+    int get_diameter() const;
 
     static void clear_currentID();
     static void set_currentID(const std::unordered_map<int, Pipe>& data);

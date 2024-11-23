@@ -64,6 +64,11 @@ bool Pipe::get_IsWorking() const{
 }
 
 
+int Pipe::get_diameter() const{
+    return this->diameter;
+}
+
+
 void Pipe::clear_currentID(){
     Pipe::current_pipeID=1;
 }

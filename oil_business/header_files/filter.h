@@ -9,7 +9,7 @@
 
 
 template<typename T, typename K>
-using Filter = bool(*)(const T &obj, const K param);
+using Filter = bool(*)(const T &obj, const K& param);
 
 template<typename T>
 std::unordered_set<int> selectByID(const T &set){
@@ -28,13 +28,13 @@ std::unordered_set<int> selectByID(const T &set){
 
 
 template<typename T, typename K>
-bool checkByName(const T &obj, const K name){
+bool checkByName(const T &obj, const K& name){
     return obj.get_name().find(name) != std::string::npos;
 }
 
 
 template<typename T, typename K>
-void findByFilter(const std::unordered_map<int, T> &obj, std::unordered_set<int> &selected_obj, Filter<T, K> func, const K param){
+void findByFilter(const std::unordered_map<int, T> &obj, std::unordered_set<int> &selected_obj, Filter<T, K> func, const K& param){
     for (const auto &pair: obj){
         if (func(pair.second, param)){
             selected_obj.emplace(pair.first);
@@ -53,10 +53,13 @@ void findByName(const std::unordered_map<int, T> &obj, std::unordered_set<int> &
 }
 
 
-bool checkByIsWorking(const Pipe &pipe, const bool is_working);
+bool checkByIsWorking(const Pipe &pipe, const bool& is_working);
 
 
 void findByIsWorking(const std::unordered_map<int, Pipe> &pipes, std::unordered_set<int> &selected_pipes);
+
+
+bool checkByDiameter(const Pipe &pipe, const int &diameter);
 
 
 template<typename T>
@@ -79,6 +82,6 @@ void delete_selectedObj(std::unordered_map<int, T> &obj, std::unordered_set<int>
 }
 
 
-bool checkByUnusedWorkshops(const CompressorStation &compressor_station, const float unused_workshops);
+bool checkByUnusedWorkshops(const CompressorStation &compressor_station, const float& unused_workshops);
 
 void findByUnusedWorkshops(const std::unordered_map<int, CompressorStation> &c_ss, std::unordered_set<int> &selected_css);
