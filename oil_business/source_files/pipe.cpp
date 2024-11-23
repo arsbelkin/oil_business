@@ -21,13 +21,13 @@ Pipe::Pipe(){
     INPUT_LINE(cin, this->name);
 
     cout << "lenght: ";
-    this->length = GetCorrectNumber<int>("lenght: ", 1, 10000);
+    this->length = GetCorrectNumber<int>("lenght: ", {1, 10000}, IsInRange);
 
     cout << "diameter: ";
-    this->diameter = GetCorrectNumber<int>("diameter: ", 1, 1000);
+    this->diameter = GetCorrectNumber<int>("diameter: ", {1, 1000}, IsInRange);
 
     cout << "is_working(0 - no / 1 - yes): ";
-    this->is_working = GetCorrectNumber<int>("is_working(0 - no / 1 - yes): ", 0, 1);
+    this->is_working = GetCorrectNumber<int>("is_working(0 - no / 1 - yes): ", {0, 1}, IsInRange);
 
     cout << "Pipe is created!\n";
 

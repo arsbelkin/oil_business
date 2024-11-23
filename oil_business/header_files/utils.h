@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <typeinfo>
 #include <string>
+#include <vector>
 
 
 #define INPUT_LINE(in, str) in.ignore(1000, '\n'); \
@@ -15,13 +16,23 @@
                                 std::cout << "Selected cleared!" << std::endl;
 
 
+template<typename T>
+using Func = bool(*)(const T& value, const std::vector<T>& range);
+
+
+template<typename T>
+bool IsInRange(const T& value, const std::vector<T>& range){
+    return (range[0] <= value)&&(value <= range[1]);
+}
+
+
 template <typename T>
-T GetCorrectNumber(const std::string message, const int min_value, const int max_value){
+T GetCorrectNumber(const std::string message, const std::vector<T>& range, Func<T> f){
     T value;
 
     while ((std::cin >> value).fail() 
             || std::cin.peek() != '\n'
-            || value < min_value || value > max_value)
+            || !f(value, range))
     {
         std::cin.clear();
         std::cin.ignore(10000, '\n');

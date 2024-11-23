@@ -18,7 +18,7 @@ std::unordered_set<int> selectByID(const T &set){
     
     while (true){
         std::cout << "input id(0 for exit): ";
-        id = GetCorrectNumber<int>("input correct id: ", 0, 1000);
+        id = GetCorrectNumber<int>("input correct id: ", {0, 1000}, IsInRange);
 
         if (id == 0) return subset;
 

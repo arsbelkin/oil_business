@@ -21,10 +21,10 @@ CompressorStation::CompressorStation(){
     INPUT_LINE(cin, this->name);
 
     cout << "number of workshops: ";
-    this->number_of_workshops = GetCorrectNumber<int>("number of workshops: ", 1, 10000);
+    this->number_of_workshops = GetCorrectNumber<int>("number of workshops: ", {1, 10000}, IsInRange);
 
     cout << "workshops in work: ";
-    this->workshops_in_work = GetCorrectNumber<int>("workshops in work: ", 0, this->number_of_workshops);
+    this->workshops_in_work = GetCorrectNumber<int>("workshops in work: ", {0, this->number_of_workshops}, IsInRange);
 
     cout << "workload: ";
     calc_workload();

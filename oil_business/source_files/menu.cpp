@@ -31,7 +31,7 @@ void pipes_menu(unordered_map<int, Pipe> &pipes, unordered_set<int> &selected_pi
     while (true){
         print_pipes_menu();
 
-        int choice = GetCorrectNumber<int>("input number: ", 0, 2);
+        int choice = GetCorrectNumber<int>("input number: ", {0, 2}, IsInRange);
 
         switch (choice)
         {
@@ -67,7 +67,7 @@ void select_pipes_menu(unordered_map<int, Pipe> &pipes, unordered_set<int> &sele
     while (true){
         print_select_pipes_menu();
 
-        int choice = GetCorrectNumber<int>("input number: ", 0, 5);
+        int choice = GetCorrectNumber<int>("input number: ", {0, 5}, IsInRange);
 
         switch (choice)
         {
@@ -112,7 +112,7 @@ void filter_pipe_menu(unordered_map<int, Pipe> &pipes, unordered_set<int> &selec
     while (true){
         print_filter_pipe();
 
-        int choice = GetCorrectNumber<int>("input number: ", 0, 4);
+        int choice = GetCorrectNumber<int>("input number: ", {0, 4}, IsInRange);
 
         switch (choice)
         {
@@ -151,7 +151,7 @@ void edit_pipes_menu(unordered_map<int, Pipe> &pipes, unordered_set<int> &select
     while (true){
         print_edit_pipe_menu();
 
-        int choice = GetCorrectNumber<int>("input number: ", 0, 2);
+        int choice = GetCorrectNumber<int>("input number: ", {0, 2}, IsInRange);
 
         switch (choice)
         {
@@ -186,7 +186,7 @@ void CS_menu(std::unordered_map<int, CompressorStation> &c_ss, std::unordered_se
     while (true){
         print_CS_menu();
 
-        int choice = GetCorrectNumber<int>("input number: ", 0, 2);
+        int choice = GetCorrectNumber<int>("input number: ", {0, 2}, IsInRange);
 
         switch (choice)
         {
@@ -222,7 +222,7 @@ void select_CS_menu(unordered_map<int, CompressorStation> &c_ss, unordered_set<i
     while (true){
         print_select_CS_menu();
 
-        int choice = GetCorrectNumber<int>("input number: ", 0, 4);
+        int choice = GetCorrectNumber<int>("input number: ", {0, 4}, IsInRange);
 
         switch (choice)
         {
@@ -267,7 +267,7 @@ void filter_CS_menu(unordered_map<int, CompressorStation> &c_ss, unordered_set<i
     while (true){
         print_filter_CS();
 
-        int choice = GetCorrectNumber<int>("input number: ", 0, 4);
+        int choice = GetCorrectNumber<int>("input number: ", {0, 4}, IsInRange);
 
         switch (choice)
         {
@@ -306,7 +306,7 @@ void edit_CS_menu(unordered_map<int, CompressorStation> &c_ss, unordered_set<int
     while (true){
         print_edit_CS_menu();
 
-        int choice = GetCorrectNumber<int>("input number: ", 0, 2);
+        int choice = GetCorrectNumber<int>("input number: ", {0, 2}, IsInRange);
 
         switch (choice)
         {
@@ -352,7 +352,7 @@ void main_menu(){
     while (true){
         print_main_menu();
 
-        int choice = GetCorrectNumber<int>("input number: ", 0, 5);
+        int choice = GetCorrectNumber<int>("input number: ", {0, 5}, IsInRange);
 
         switch (choice)
         {
