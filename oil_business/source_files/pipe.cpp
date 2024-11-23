@@ -21,13 +21,37 @@ Pipe::Pipe(){
     INPUT_LINE(cin, this->name);
 
     cout << "lenght: ";
-    this->length = GetCorrectNumber<int>("lenght: ", {1, 10000}, IsInRange);
+    this->length = GetCorrectNumber<int, std::vector<int>>("lenght: ", {1, 10000}, IsInRange);
 
     cout << "diameter: ";
-    this->diameter = GetCorrectNumber<int>("diameter: ", {1, 1000}, IsInRange);
+    this->diameter = GetCorrectNumber<int, std::unordered_set<int>>("diameter: ", {500, 700, 1000, 1400}, IsExistingObj);
 
     cout << "is_working(0 - no / 1 - yes): ";
-    this->is_working = GetCorrectNumber<int>("is_working(0 - no / 1 - yes): ", {0, 1}, IsInRange);
+    this->is_working = GetCorrectNumber<int, std::vector<int>>("is_working(0 - no / 1 - yes): ", {0, 1}, IsInRange);
+
+    cout << "Pipe is created!\n";
+
+    cout << "------------------\n";
+}
+
+
+Pipe::Pipe(const int diameter){
+        cout << "-----add pipe-----\n";
+
+    this->id = ++Pipe::current_pipeID;
+    cout << "id: " << this->id << endl;
+
+    cout << "name: ";
+    INPUT_LINE(cin, this->name);
+
+    cout << "lenght: ";
+    this->length = GetCorrectNumber<int, std::vector<int>>("lenght: ", {1, 10000}, IsInRange);
+
+    this->diameter = diameter;
+    cout << "diameter: " << diameter << endl;
+
+    cout << "is_working(0 - no / 1 - yes): ";
+    this->is_working = GetCorrectNumber<int, std::vector<int>>("is_working(0 - no / 1 - yes): ", {0, 1}, IsInRange);
 
     cout << "Pipe is created!\n";
 
@@ -42,6 +66,8 @@ Pipe::Pipe(std::ifstream &file){
     file >> this->length;
     file >> this->diameter;
     file >> this->is_working;
+    file >> this->links[0];
+    file >> this->links[1];
 }
 
 int Pipe::get_currentId(){
@@ -68,6 +94,14 @@ int Pipe::get_diameter() const{
     return this->diameter;
 }
 
+
+bool Pipe::InUsing() const{
+    return (this->links[0]) || (this->links[1]);
+}
+
+std::vector<int> Pipe::get_links(){
+    return this->links;
+}
 
 void Pipe::clear_currentID(){
     Pipe::current_pipeID=1;
@@ -96,6 +130,12 @@ ostream& operator << (ostream &os, const Pipe &pipe){
         << "lenght: " << pipe.length << endl
         << "diameter: " << pipe.diameter << endl
         << "is working: " << pipe.work_to_string() << endl
+        << "links{" << endl
+        << "   " << "out: "
+        << pipe.links[0] << " " << endl
+        << "   " << "in: "
+        << pipe.links[1] << " "
+        << endl << "}" << endl
         << "--------------" << endl;
 
     return os;
@@ -109,4 +149,6 @@ void Pipe::save(ofstream &file) const{
     file << this->length << endl;
     file << this->diameter << endl;
     file << this->is_working << endl;
+    file << this->links[0] << endl;
+    file << this->links[1] << endl;
 }

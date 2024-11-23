@@ -1,5 +1,7 @@
 #pragma once
 #include <unordered_map>
+#include <unordered_set>
+#include <vector>
 
 
 class Pipe{
@@ -13,8 +15,11 @@ private:
     int diameter;
     bool is_working;
 
+    std::vector<int> links = {0, 0};
+
 public:
     Pipe();
+    Pipe(const int diameter);
     Pipe(std::ifstream &file);
 
     static int get_currentId();
@@ -22,6 +27,9 @@ public:
     std::string get_name() const;
     bool get_IsWorking() const;
     int get_diameter() const;
+
+    bool InUsing() const;
+    std::vector<int> get_links();
 
     static void clear_currentID();
     static void set_currentID(const std::unordered_map<int, Pipe>& data);

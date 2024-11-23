@@ -16,18 +16,24 @@
                                 std::cout << "Selected cleared!" << std::endl;
 
 
-template<typename T>
-using Func = bool(*)(const T& value, const std::vector<T>& range);
+template<typename T, typename K>
+using Func = bool(*)(const T& value, const K& range);
 
 
-template<typename T>
-bool IsInRange(const T& value, const std::vector<T>& range){
+template<typename T, typename K>
+bool IsInRange(const T& value, const K& range){
     return (range[0] <= value)&&(value <= range[1]);
 }
 
 
-template <typename T>
-T GetCorrectNumber(const std::string message, const std::vector<T>& range, Func<T> f){
+template<typename T, typename K>
+bool IsExistingObj(const T& id, const K& objs){
+    return objs.contains(id);
+}
+
+
+template <typename T, typename K>
+T GetCorrectNumber(const std::string message, const K& range, Func<T, K> f){
     T value;
 
     while ((std::cin >> value).fail() 
@@ -77,9 +83,11 @@ void load(std::ifstream &file, std::unordered_map<int, T> &objs){
 
 
 template<typename T>
-void add_obj(std::unordered_map<int, T> &objs){
+int add_obj(std::unordered_map<int, T> &objs){
     T obj;
     objs.emplace(obj.get_id(), obj);
+
+    return obj.get_id();
 }
 
 template<typename T>

@@ -18,7 +18,7 @@ std::unordered_set<int> selectByID(const T &set){
     
     while (true){
         std::cout << "input id(0 for exit): ";
-        id = GetCorrectNumber<int>("input correct id: ", {0, 1000}, IsInRange);
+        id = GetCorrectNumber<int, std::vector<int>>("input correct id: ", {0, 1000}, IsInRange);
 
         if (id == 0) return subset;
 
@@ -60,6 +60,7 @@ void findByIsWorking(const std::unordered_map<int, Pipe> &pipes, std::unordered_
 
 
 bool checkByDiameter(const Pipe &pipe, const int &diameter);
+int findByDiameter(const int diameter, std::unordered_map<int, Pipe> &pipes);
 
 
 template<typename T>

@@ -7,6 +7,7 @@
 #include "../header_files/utils.h"
 #include "../header_files/filter.h"
 #include "../header_files/logger.h"
+#include "../header_files/GTN.h"
 #include <unordered_map>
 #include <unordered_set>
 #include <chrono>
@@ -31,7 +32,7 @@ void pipes_menu(unordered_map<int, Pipe> &pipes, unordered_set<int> &selected_pi
     while (true){
         print_pipes_menu();
 
-        int choice = GetCorrectNumber<int>("input number: ", {0, 2}, IsInRange);
+        int choice = GetCorrectNumber<int, std::vector<int>>("input number: ", {0, 2}, IsInRange);
 
         switch (choice)
         {
@@ -67,7 +68,7 @@ void select_pipes_menu(unordered_map<int, Pipe> &pipes, unordered_set<int> &sele
     while (true){
         print_select_pipes_menu();
 
-        int choice = GetCorrectNumber<int>("input number: ", {0, 5}, IsInRange);
+        int choice = GetCorrectNumber<int, std::vector<int>>("input number: ", {0, 5}, IsInRange);
 
         switch (choice)
         {
@@ -112,7 +113,7 @@ void filter_pipe_menu(unordered_map<int, Pipe> &pipes, unordered_set<int> &selec
     while (true){
         print_filter_pipe();
 
-        int choice = GetCorrectNumber<int>("input number: ", {0, 4}, IsInRange);
+        int choice = GetCorrectNumber<int, std::vector<int>>("input number: ", {0, 4}, IsInRange);
 
         switch (choice)
         {
@@ -151,7 +152,7 @@ void edit_pipes_menu(unordered_map<int, Pipe> &pipes, unordered_set<int> &select
     while (true){
         print_edit_pipe_menu();
 
-        int choice = GetCorrectNumber<int>("input number: ", {0, 2}, IsInRange);
+        int choice = GetCorrectNumber<int, std::vector<int>>("input number: ", {0, 2}, IsInRange);
 
         switch (choice)
         {
@@ -186,7 +187,7 @@ void CS_menu(std::unordered_map<int, CompressorStation> &c_ss, std::unordered_se
     while (true){
         print_CS_menu();
 
-        int choice = GetCorrectNumber<int>("input number: ", {0, 2}, IsInRange);
+        int choice = GetCorrectNumber<int, std::vector<int>>("input number: ", {0, 2}, IsInRange);
 
         switch (choice)
         {
@@ -222,7 +223,7 @@ void select_CS_menu(unordered_map<int, CompressorStation> &c_ss, unordered_set<i
     while (true){
         print_select_CS_menu();
 
-        int choice = GetCorrectNumber<int>("input number: ", {0, 4}, IsInRange);
+        int choice = GetCorrectNumber<int, std::vector<int>>("input number: ", {0, 4}, IsInRange);
 
         switch (choice)
         {
@@ -267,7 +268,7 @@ void filter_CS_menu(unordered_map<int, CompressorStation> &c_ss, unordered_set<i
     while (true){
         print_filter_CS();
 
-        int choice = GetCorrectNumber<int>("input number: ", {0, 4}, IsInRange);
+        int choice = GetCorrectNumber<int, std::vector<int>>("input number: ", {0, 4}, IsInRange);
 
         switch (choice)
         {
@@ -306,7 +307,7 @@ void edit_CS_menu(unordered_map<int, CompressorStation> &c_ss, unordered_set<int
     while (true){
         print_edit_CS_menu();
 
-        int choice = GetCorrectNumber<int>("input number: ", {0, 2}, IsInRange);
+        int choice = GetCorrectNumber<int, std::vector<int>>("input number: ", {0, 2}, IsInRange);
 
         switch (choice)
         {
@@ -326,6 +327,46 @@ void edit_CS_menu(unordered_map<int, CompressorStation> &c_ss, unordered_set<int
 }
 
 
+// GTN menu
+void print_GTN_menu(){
+    cout << endl;
+    cout << endl;
+    cout << "-----Menu GTN-----\n";
+    cout << "0 - back\n";
+    cout << "1 - print graph\n";
+    cout << "2 - create graph\n";
+    cout << "3 - add node\n";
+    cout << "--------------\n";
+}
+
+
+void GTN_menu(GTNetwork& gtn, std::unordered_map<int, CompressorStation> &c_ss, unordered_map<int, Pipe> &pipes){
+    while (true){
+        print_GTN_menu();
+
+        int choice = GetCorrectNumber<int, std::vector<int>>("input number: ", {0, 3}, IsInRange);
+
+        switch (choice)
+        {
+        case 0:
+            return;
+        case 1:
+            gtn.print_graph();
+            break;
+        case 2:
+            gtn.create_graph(c_ss);
+            break;
+        case 3:
+            gtn.add_node(c_ss, pipes);
+            break;
+        default:
+            cout << "You choose the number, that not exist!\n";
+            break;
+        }
+    }
+}
+
+
 // main menu
 void print_main_menu(){
     cout << endl;
@@ -334,9 +375,10 @@ void print_main_menu(){
     cout << "0 - exit\n";
     cout << "1 - pipes actions\n";
     cout << "2 - compressor stations actions\n";
-    cout << "3 - see all objects\n";
-    cout << "4 - save in file\n";
-    cout << "5 - load from file\n";
+    cout << "3 - GTN actions\n";
+    cout << "4 - see all objects\n";
+    cout << "5 - save in file\n";
+    cout << "6 - load from file\n";
     cout << "--------------\n";
 };
 
@@ -348,11 +390,13 @@ void main_menu(){
 
     unordered_map<int, CompressorStation> c_ss;
     unordered_set<int> selected_css;
+    
+    GTNetwork gtn;
 
     while (true){
         print_main_menu();
 
-        int choice = GetCorrectNumber<int>("input number: ", {0, 5}, IsInRange);
+        int choice = GetCorrectNumber<int, std::vector<int>>("input number: ", {0, 6}, IsInRange);
 
         switch (choice)
         {
@@ -367,12 +411,15 @@ void main_menu(){
             CS_menu(c_ss, selected_css);
             break;
         case 3:
-            see_all_objects(pipes, c_ss);
+            GTN_menu(gtn, c_ss, pipes);
             break;
         case 4:
-            save_obj(pipes, c_ss);
+            see_all_objects(pipes, c_ss);
             break;
         case 5:
+            save_obj(pipes, c_ss);
+            break;
+        case 6:
             load_obj(pipes, c_ss, selected_pipes, selected_css);
             break;
         default:

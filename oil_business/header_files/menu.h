@@ -1,6 +1,7 @@
 #pragma once
 #include <unordered_set>
 #include <unordered_map>
+#include <GTN.h>
 
 
 // main menu
@@ -34,3 +35,8 @@ void filter_CS_menu(std::unordered_map<int, CompressorStation> &c_ss, std::unord
 
 void print_edit_CS_menu();
 void edit_CS_menu(std::unordered_map<int, CompressorStation> &c_ss, std::unordered_set<int> &selected_css);
+
+
+// GTN menu
+void print_GTN_menu();
+void GTN_menu(GTNetwork& gtn, std::unordered_map<int, CompressorStation> &c_ss, std::unordered_map<int, Pipe> &pipes);

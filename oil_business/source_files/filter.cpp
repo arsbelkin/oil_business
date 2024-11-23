@@ -12,7 +12,7 @@ bool checkByIsWorking(const Pipe &pipe, const bool& is_working){
 
 void findByIsWorking(const std::unordered_map<int, Pipe> &pipes, std::unordered_set<int> &selected_pipes){
     cout << "working status(0 - no / 1 - yes): ";
-    int work_status = GetCorrectNumber<int>("working status(0 - no / 1 - yes): ", {0, 1}, IsInRange);
+    int work_status = GetCorrectNumber<int, std::vector<int>>("working status(0 - no / 1 - yes): ", {0, 1}, IsInRange);
 
     findByFilter<Pipe, bool>(pipes, selected_pipes, checkByIsWorking, work_status);
 }
@@ -25,7 +25,7 @@ bool checkByUnusedWorkshops(const CompressorStation &compressor_station, const f
 
 void findByUnusedWorkshops(const std::unordered_map<int, CompressorStation> &c_ss, std::unordered_set<int> &selected_css){
     cout << "percent of unused workshops: ";
-    float unused_wokshops = GetCorrectNumber<float>("percent of unused workshops: ", {0, 1000000}, IsInRange);
+    float unused_wokshops = GetCorrectNumber<float, std::vector<float>>("percent of unused workshops: ", {0, 1000000}, IsInRange);
 
     findByFilter<CompressorStation, float>(c_ss, selected_css, checkByUnusedWorkshops, unused_wokshops);
 }
@@ -33,4 +33,16 @@ void findByUnusedWorkshops(const std::unordered_map<int, CompressorStation> &c_s
 
 bool checkByDiameter(const Pipe &pipe, const int &diameter){
     return pipe.get_diameter() == diameter;
+}
+
+
+int findByDiameter(const int diameter, std::unordered_map<int, Pipe> &pipes){
+    for (const auto& [id, pipe]: pipes){
+        if (!pipe.InUsing() && checkByDiameter(pipe, diameter)) return pipe.get_id();
+    }
+    
+    Pipe pipe(diameter);
+    pipes.emplace(pipe.get_id(), pipe);
+
+    return pipe.get_id();
 }

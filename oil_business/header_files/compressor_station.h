@@ -1,5 +1,7 @@
 #pragma once
 #include <unordered_map>
+#include <vector>
+#include <unordered_set>
 
 
 #define PRINT_WORKLOAD(elem) elem workload * 100 << "%"
@@ -15,6 +17,8 @@ private:
     int number_of_workshops;
     int workshops_in_work;
     float workload;
+
+    std::vector<std::unordered_set<int>> links = {{}, {}};
     
 public:
     CompressorStation();
@@ -24,6 +28,10 @@ public:
     int get_id() const;
     std::string get_name() const;
     float get_workload() const;
+
+    std::vector<std::unordered_set<int>> get_links() const;
+    bool InUsing() const;
+    void set_links(std::ifstream &file, const int& pos);
 
     static void clear_currentID();
     static void set_currentID(const std::unordered_map<int, CompressorStation>& data);

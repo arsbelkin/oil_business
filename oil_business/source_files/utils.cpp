@@ -19,8 +19,6 @@ void save_obj(const unordered_map<int, Pipe> &pipes, const unordered_map<int, Co
     ofstream file("static/" + path_to_file);
 
     if (file.is_open()){
-        file << Pipe::get_currentId();
-        file << CompressorStation::get_currentId();
         if (pipes.empty()) {
             cout << "No pipes" << endl;
         } else {
