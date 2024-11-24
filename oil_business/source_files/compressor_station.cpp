@@ -98,6 +98,11 @@ bool CompressorStation::addLink(const int& pos, const int& id){
 }
 
 
+bool CompressorStation::delLink(const int& pos, const int& id){
+    this->links[pos].erase(id);
+    return 1;
+}
+
 
 void CompressorStation::clear_currentID(){
     CompressorStation::current_csID = 1;

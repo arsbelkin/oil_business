@@ -1,7 +1,8 @@
 #pragma once
-#include <pipe.h>
-#include <compressor_station.h>
-#include <utils.h>
+#include "pipe.h"
+#include "compressor_station.h"
+#include "utils.h"
+#include "GTN.h"
 #include <unordered_map>
 #include <unordered_set>
 #include <sstream>
@@ -71,11 +72,14 @@ void selectAll(const std::unordered_map<int, T> &obj, std::unordered_set<int> &s
 }
 
 
-template<typename T>
-void delete_selectedObj(std::unordered_map<int, T> &obj, std::unordered_set<int> &selected_obj){
+template<typename T, typename K>
+void delete_selectedObj(GTNetwork& gtn, std::unordered_map<int, T> &obj_1,
+std::unordered_set<int> &selected_obj, std::unordered_map<int, K> &obj_2)
+{
     int counter = 0;
     for (auto it = selected_obj.begin(); it != selected_obj.end();){
-        erase_obj(obj, *it);
+        if (obj_1.at(*it).InUsing()) gtn.eraseObjFromGraph(obj_1.at(*it), obj_2, obj_1);
+        erase_obj(obj_1, *it);
         it = selected_obj.erase(it);
         ++counter;
     }

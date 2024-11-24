@@ -33,6 +33,7 @@ public:
     bool InUsing() const;
     void set_links(std::ifstream &file, const int& pos);
     bool addLink(const int& pos, const int& id);
+    bool delLink(const int& pos, const int& id);
 
     static void clear_currentID();
     static void set_currentID(const std::unordered_map<int, CompressorStation>& data);

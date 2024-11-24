@@ -27,6 +27,12 @@ bool IsInRange(const T& value, const K& range){
 
 
 template<typename T, typename K>
+bool ZeroRange(const T& value, const K& objs){
+    return IsExistingObj(value, objs) || (value == 0);
+}
+
+
+template<typename T, typename K>
 bool IsExistingObj(const T& id, const K& objs){
     return objs.contains(id);
 }
