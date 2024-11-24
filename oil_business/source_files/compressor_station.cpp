@@ -92,6 +92,13 @@ void CompressorStation::set_links(std::ifstream &file, const int& pos){
 }
 
 
+bool CompressorStation::addLink(const int& pos, const int& id){
+    this->links[pos].emplace(id);
+    return 1;
+}
+
+
+
 void CompressorStation::clear_currentID(){
     CompressorStation::current_csID = 1;
 }

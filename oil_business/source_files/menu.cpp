@@ -336,6 +336,7 @@ void print_GTN_menu(){
     cout << "1 - print graph\n";
     cout << "2 - create graph\n";
     cout << "3 - add node\n";
+    cout << "4 - TS\n";
     cout << "--------------\n";
 }
 
@@ -344,7 +345,7 @@ void GTN_menu(GTNetwork& gtn, std::unordered_map<int, CompressorStation> &c_ss, 
     while (true){
         print_GTN_menu();
 
-        int choice = GetCorrectNumber<int, std::vector<int>>("input number: ", {0, 3}, IsInRange);
+        int choice = GetCorrectNumber<int, std::vector<int>>("input number: ", {0, 4}, IsInRange);
 
         switch (choice)
         {
@@ -354,10 +355,13 @@ void GTN_menu(GTNetwork& gtn, std::unordered_map<int, CompressorStation> &c_ss, 
             gtn.print_graph();
             break;
         case 2:
-            gtn.create_graph(c_ss);
+            gtn.create_graph(c_ss, pipes);
             break;
         case 3:
             gtn.add_node(c_ss, pipes);
+            break;
+        case 4:
+            gtn.make_TS();
             break;
         default:
             cout << "You choose the number, that not exist!\n";

@@ -29,7 +29,8 @@ public:
     int get_diameter() const;
 
     bool InUsing() const;
-    std::vector<int> get_links();
+    std::vector<int> get_links() const;
+    bool set_links(const int& out, const int& in);
 
     static void clear_currentID();
     static void set_currentID(const std::unordered_map<int, Pipe>& data);

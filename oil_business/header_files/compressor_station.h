@@ -32,6 +32,7 @@ public:
     std::vector<std::unordered_set<int>> get_links() const;
     bool InUsing() const;
     void set_links(std::ifstream &file, const int& pos);
+    bool addLink(const int& pos, const int& id);
 
     static void clear_currentID();
     static void set_currentID(const std::unordered_map<int, CompressorStation>& data);

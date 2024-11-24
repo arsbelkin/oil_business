@@ -2,17 +2,18 @@
 #include "../header_files/GTN.h"
 #include "../header_files/utils.h"
 #include "../header_files/filter.h"
+#include "../header_files/Kan_by_Volkov.h"
 
 using namespace std;
 
 
-bool GTNetwork::create_graph(const std::unordered_map<int, CompressorStation>& c_ss){
+bool GTNetwork::create_graph(const std::unordered_map<int, CompressorStation>& c_ss, const std::unordered_map<int, Pipe>& pipes){
     int counter = 0;
 
     for (const auto& cs: c_ss){
-        auto neighbours = cs.second.get_links()[1];
-        if (neighbours.size()){
-            for (const auto& v: neighbours) this->graph[v].push_back(v);
+        auto neighbours_pipes = cs.second.get_links()[1]; // выходящие трубы
+        if (neighbours_pipes.size()){
+            for (const auto& pipe_id: neighbours_pipes) this->graph[cs.first].emplace(pipes.at(pipe_id).get_links()[1]);
         } else {
             this->graph[cs.first] = {};
         }
@@ -49,6 +50,20 @@ bool GTNetwork::add_node(std::unordered_map<int, CompressorStation>& c_ss, std::
     int diameter = GetCorrectNumber<int, std::unordered_set<int>>("pipe's diameter: ", {500, 700, 1000, 1400}, IsExistingObj);
     int pipe_id = findByDiameter(diameter, pipes);
 
-    
+    c_ss.at(output_id).addLink(1, pipe_id);
+    pipes.at(pipe_id).set_links(output_id, input_id);
+    c_ss.at(input_id).addLink(0, pipe_id);
 
+    return true;
+}
+
+
+bool GTNetwork::make_TS(){
+    this->order = Kan_by_Volkov(this->graph);
+
+    cout << "TS: ";
+    for (const auto& v: this->order) cout << v << " ";
+    cout << endl;
+
+    return 1;
 }

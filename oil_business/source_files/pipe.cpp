@@ -99,9 +99,16 @@ bool Pipe::InUsing() const{
     return (this->links[0]) || (this->links[1]);
 }
 
-std::vector<int> Pipe::get_links(){
+std::vector<int> Pipe::get_links() const{
     return this->links;
 }
+
+
+bool Pipe::set_links(const int& out, const int& in){
+    this->links = {out, in};
+    return 1;
+}
+
 
 void Pipe::clear_currentID(){
     Pipe::current_pipeID=1;
