@@ -8,11 +8,13 @@ using namespace std;
 
 bool GTNetwork::create_graph(const std::unordered_map<int, CompressorStation>& c_ss, const std::unordered_map<int, Pipe>& pipes){
     int counter = 0;
+    this->graph.clear();
 
     for (const auto& [id, cs]: c_ss){
         auto neighbours_pipes = cs.get_links()[1]; // выходящие трубы
         if (neighbours_pipes.size()){
-            for (const auto& pipe_id: neighbours_pipes) this->graph[id].emplace(pipes.at(pipe_id).get_links()[1]);
+            for (const auto& pipe_id: neighbours_pipes) 
+                this->graph[id].emplace(pipes.at(pipe_id).get_links()[1]);
         } else if (cs.InUsing()) {
             this->graph[id] = {};
         }
@@ -61,7 +63,12 @@ bool GTNetwork::make_TS(){
     this->order = Kan_by_Volkov(this->graph);
 
     cout << "TS: ";
-    for (const auto& v: this->order) cout << v << " ";
+    if (this->order.size()) {
+        for (const auto& v: this->order) cout << v << " ";
+    } else {
+        cout << "graph has cycle or TS is empty set!" << endl;
+    }
+    
     cout << endl;
 
     return 1;

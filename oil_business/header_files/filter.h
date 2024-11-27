@@ -78,10 +78,14 @@ std::unordered_set<int> &selected_obj, std::unordered_map<int, K> &obj_2)
 {
     int counter = 0;
     for (auto it = selected_obj.begin(); it != selected_obj.end();){
-        if (obj_1.at(*it).InUsing()) gtn.eraseObjFromGraph(obj_1.at(*it), obj_2, obj_1);
-        erase_obj(obj_1, *it);
-        it = selected_obj.erase(it);
-        ++counter;
+        if (!obj_1.at(*it).InUsing()){
+            erase_obj(obj_1, *it);
+            it = selected_obj.erase(it);
+            ++counter;
+        } else {
+            std::cout << *it << " used in graph" << std::endl;
+            ++it;
+        }
     }
     std::cout << counter << " objects was erased!" << std::endl;
 }
