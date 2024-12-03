@@ -1,6 +1,4 @@
 #pragma once
-#include <unordered_set>
-#include <unordered_map>
 #include <GTN.h>
 
 
@@ -11,41 +9,35 @@ void main_menu();
 
 // pipe menu
 void print_pipes_menu();
-void pipes_menu(GTNetwork& gtn, std::unordered_map<int, Pipe> &pipes,
-std::unordered_set<int> &selected_pipes, std::unordered_map<int, CompressorStation> &c_ss);
+void pipes_menu(GTNetwork& gtn);
 
 void print_select_pipes_menu();
-void select_pipes_menu(GTNetwork& gtn, std::unordered_map<int, Pipe> &pipes,
-std::unordered_set<int> &selected_pipes, std::unordered_map<int, CompressorStation> &c_ss);
+void select_pipes_menu(GTNetwork& gtn);
 
 void print_filter_pipe();
-void filter_pipe_menu(std::unordered_map<int, Pipe> &pipes, std::unordered_set<int> &selected_pipes);
+void filter_pipe_menu(GTNetwork& gtn);
 
 void print_edit_pipe_menu();
-void edit_pipes_menu(GTNetwork& gtn, std::unordered_map<int, Pipe> &pipes,
-std::unordered_set<int> &selected_pipes, std::unordered_map<int, CompressorStation> &c_ss);
+void edit_pipes_menu(GTNetwork& gtn);
 
 
 // CS menu
 void print_CS_menu();
-void CS_menu(GTNetwork& gtn, std::unordered_map<int, Pipe> &pipes,
-std::unordered_set<int> &selected_css, std::unordered_map<int, CompressorStation> &c_ss);
+void CS_menu(GTNetwork& gtn);
 
 void print_select_CS_menu();
-void select_CS_menu(GTNetwork& gtn, std::unordered_map<int, Pipe> &pipes,
-std::unordered_set<int> &selected_css, std::unordered_map<int, CompressorStation> &c_ss);
+void select_CS_menu(GTNetwork& gtn);
 
 void print_filter_CS();
-void filter_CS_menu(std::unordered_map<int, CompressorStation> &c_ss, std::unordered_set<int> &selected_css);
+void filter_CS_menu(GTNetwork& gtn);
 
 void print_edit_CS_menu();
-void edit_CS_menu(GTNetwork& gtn, std::unordered_map<int, Pipe> &pipes,
-std::unordered_set<int> &selected_css, std::unordered_map<int, CompressorStation> &c_ss);
+void edit_CS_menu(GTNetwork& gtn);
 
 
 // GTN menu
 void print_GTN_menu();
-void GTN_menu(GTNetwork& gtn, std::unordered_map<int, CompressorStation> &c_ss, std::unordered_map<int, Pipe> &pipes);
+void GTN_menu(GTNetwork& gtn);
 
 void print_edit_GTN_menu();
-void edit_GTN_menu(GTNetwork& gtn, std::unordered_map<int, CompressorStation> &c_ss, std::unordered_map<int, Pipe> &pipes);
+void edit_GTN_menu(GTNetwork& gtn);

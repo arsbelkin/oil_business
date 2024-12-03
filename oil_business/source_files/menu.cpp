@@ -1,8 +1,4 @@
 #include <iostream>
-#include "../header_files/pipe.h"
-#include "../header_files/pipes_func.h"
-#include "../header_files/compressor_station.h"
-#include "../header_files/CS_func.h"
 #include "../header_files/menu.h"
 #include "../header_files/utils.h"
 #include "../header_files/filter.h"
@@ -28,8 +24,7 @@ void print_pipes_menu(){
     cout << "--------------\n";
 }
 
-void pipes_menu(GTNetwork& gtn, unordered_map<int, Pipe> &pipes,
-unordered_set<int> &selected_pipes, std::unordered_map<int, CompressorStation> &c_ss){
+void pipes_menu(GTNetwork& gtn){
     while (true){
         print_pipes_menu();
 
@@ -40,10 +35,10 @@ unordered_set<int> &selected_pipes, std::unordered_map<int, CompressorStation> &
         case 0:
             return;
         case 1:
-            add_obj(pipes);
+            gtn.add_Pipe();
             break;
         case 2:
-            select_pipes_menu(gtn, pipes, selected_pipes, c_ss);
+            select_pipes_menu(gtn);
             break;
         default:
             cout << "You choose the number, that not exist!\n";
@@ -65,8 +60,7 @@ void print_select_pipes_menu(){
     cout << "--------------\n";
 }
 
-void select_pipes_menu(GTNetwork& gtn, unordered_map<int, Pipe> &pipes,
-unordered_set<int> &selected_pipes, std::unordered_map<int, CompressorStation> &c_ss){
+void select_pipes_menu(GTNetwork& gtn){
     while (true){
         print_select_pipes_menu();
 
@@ -77,19 +71,19 @@ unordered_set<int> &selected_pipes, std::unordered_map<int, CompressorStation> &
         case 0:
             return;
         case 1:
-            print_selected(pipes, selected_pipes);
+            gtn.print_selectedPipes();
             break;
         case 2:
-            edit_pipes_menu(gtn, pipes, selected_pipes, c_ss);
+            edit_pipes_menu(gtn);
             break;
         case 3:
-            filter_pipe_menu(pipes, selected_pipes);
+            filter_pipe_menu(gtn);
             break;
         case 4:
-            selected_pipes = selectByID(selected_pipes);
+            gtn.set_selectedPipes_byID(1);
             break;
         case 5:
-            CLEAR_SELECTED(selected_pipes);
+            gtn.clear_selected(0);
             break;
         default:
             cout << "You choose the number, that not exist!\n";
@@ -111,7 +105,7 @@ void print_filter_pipe(){
     cout << "--------------\n";
 }
 
-void filter_pipe_menu(unordered_map<int, Pipe> &pipes, unordered_set<int> &selected_pipes){
+void filter_pipe_menu(GTNetwork& gtn){
     while (true){
         print_filter_pipe();
 
@@ -122,16 +116,16 @@ void filter_pipe_menu(unordered_map<int, Pipe> &pipes, unordered_set<int> &selec
         case 0:
             return;
         case 1:
-            selectAll(pipes, selected_pipes);
+            gtn.selectAllPipes();
             break;
         case 2:
-            selected_pipes = selectByID(pipes);
+            gtn.set_selectedPipes_byID(0);
             break;
         case 3:
-            findByName(pipes, selected_pipes);
+            gtn.findPipesbyName();
             break;
         case 4:
-            findByIsWorking(pipes, selected_pipes);
+            gtn.findPipesByIsWorking();
             break;
         default:
             cout << "You choose the number, that not exist!\n";
@@ -150,8 +144,7 @@ void print_edit_pipe_menu(){
     cout << "--------------\n";
 }
 
-void edit_pipes_menu(GTNetwork& gtn, unordered_map<int, Pipe> &pipes,
-unordered_set<int> &selected_pipes, std::unordered_map<int, CompressorStation> &c_ss)
+void edit_pipes_menu(GTNetwork& gtn)
 {
     while (true){
         print_edit_pipe_menu();
@@ -163,10 +156,10 @@ unordered_set<int> &selected_pipes, std::unordered_map<int, CompressorStation> &
         case 0:
             return;
         case 1:
-            change_selectedPipes_workStatus(pipes, selected_pipes);
+            gtn.change_selectedPipes_workStatus();
             break;
         case 2:
-            delete_selectedObj(gtn, pipes, selected_pipes, c_ss);
+            gtn.del_selectedPipes();
             break;
         default:
             cout << "You choose the number, that not exist!\n";
@@ -187,8 +180,7 @@ void print_CS_menu(){
     cout << "--------------\n";
 }
 
-void CS_menu(GTNetwork& gtn, unordered_map<int, Pipe> &pipes,
-unordered_set<int> &selected_css, std::unordered_map<int, CompressorStation> &c_ss){
+void CS_menu(GTNetwork& gtn){
     while (true){
         print_CS_menu();
 
@@ -199,10 +191,10 @@ unordered_set<int> &selected_css, std::unordered_map<int, CompressorStation> &c_
         case 0:
             return;
         case 1:
-            add_obj(c_ss);
+            gtn.add_CS();
             break;
         case 2:
-            select_CS_menu(gtn, pipes, selected_css, c_ss);
+            select_CS_menu(gtn);
             break;
         default:
             cout << "You choose the number, that not exist!\n";
@@ -224,31 +216,30 @@ void print_select_CS_menu(){
     cout << "--------------\n";
 }
 
-void select_CS_menu(GTNetwork& gtn, unordered_map<int, Pipe> &pipes,
-unordered_set<int> &selected_css, std::unordered_map<int, CompressorStation> &c_ss){
+void select_CS_menu(GTNetwork& gtn){
     while (true){
         print_select_CS_menu();
 
-        int choice = GetCorrectNumber<int, std::vector<int>>("input number: ", {0, 4}, IsInRange);
+        int choice = GetCorrectNumber<int, std::vector<int>>("input number: ", {0, 5}, IsInRange);
 
         switch (choice)
         {
         case 0:
             return;
         case 1:
-            print_selected(c_ss, selected_css);
+            gtn.print_selectedCS();
             break;
         case 2:
-            edit_CS_menu(gtn, pipes, selected_css, c_ss);
+            edit_CS_menu(gtn);
             break;
         case 3:
-            filter_CS_menu(c_ss, selected_css);
+            filter_CS_menu(gtn);
             break;
         case 4:
-            selected_css = selectByID(selected_css);
+            gtn.set_selectedCS_byID(1);
             break;
         case 5:
-            CLEAR_SELECTED(selected_css);
+            gtn.clear_selected(1);
             break;
         default:
             cout << "You choose the number, that not exist!\n";
@@ -270,7 +261,7 @@ void print_filter_CS(){
     cout << "--------------\n";
 }
 
-void filter_CS_menu(unordered_map<int, CompressorStation> &c_ss, unordered_set<int> &selected_css){
+void filter_CS_menu(GTNetwork& gtn){
     while (true){
         print_filter_CS();
 
@@ -281,16 +272,16 @@ void filter_CS_menu(unordered_map<int, CompressorStation> &c_ss, unordered_set<i
         case 0:
             return;
         case 1:
-            selectAll(c_ss, selected_css);
+            gtn.selectAllCS();
             break;
         case 2:
-            selected_css = selectByID(c_ss);
+            gtn.set_selectedCS_byID(0);
             break;
         case 3:
-            findByName(c_ss, selected_css);
+            gtn.findCSbyName();
             break;
         case 4:
-            findByUnusedWorkshops(c_ss, selected_css);
+            gtn.findByUnusedWorkshops();
             break;
         default:
             cout << "You choose the number, that not exist!\n";
@@ -309,8 +300,7 @@ void print_edit_CS_menu(){
     cout << "--------------\n";
 }
 
-void edit_CS_menu(GTNetwork& gtn, unordered_map<int, Pipe> &pipes,
-unordered_set<int> &selected_css, std::unordered_map<int, CompressorStation> &c_ss)
+void edit_CS_menu(GTNetwork& gtn)
 {
     while (true){
         print_edit_CS_menu();
@@ -322,10 +312,10 @@ unordered_set<int> &selected_css, std::unordered_map<int, CompressorStation> &c_
         case 0:
             return;
         case 1:
-            change_selectedCS_workload(c_ss, selected_css);
+            gtn.change_selectedCS_workload();
             break;
         case 2:
-            delete_selectedObj(gtn, c_ss, selected_css, pipes);
+            gtn.del_selectedCS();
             break;
         default:
             cout << "You choose the number, that not exist!\n";
@@ -348,8 +338,7 @@ void print_GTN_menu(){
     cout << "--------------\n";
 }
 
-
-void GTN_menu(GTNetwork& gtn, std::unordered_map<int, CompressorStation> &c_ss, unordered_map<int, Pipe> &pipes){
+void GTN_menu(GTNetwork& gtn){
     while (true){
         print_GTN_menu();
 
@@ -366,10 +355,10 @@ void GTN_menu(GTNetwork& gtn, std::unordered_map<int, CompressorStation> &c_ss, 
             gtn.make_TS();
             break;
         case 3:
-            gtn.create_graph(c_ss, pipes);
+            gtn.create_graph();
             break;
         case 4:
-            edit_GTN_menu(gtn, c_ss, pipes);
+            edit_GTN_menu(gtn);
             break;
         default:
             cout << "You choose the number, that not exist!\n";
@@ -377,7 +366,6 @@ void GTN_menu(GTNetwork& gtn, std::unordered_map<int, CompressorStation> &c_ss, 
         }
     }
 }
-
 
 void print_edit_GTN_menu(){
     cout << endl;
@@ -391,8 +379,7 @@ void print_edit_GTN_menu(){
     cout << "--------------\n";
 }
 
-
-void edit_GTN_menu(GTNetwork& gtn, std::unordered_map<int, CompressorStation> &c_ss, unordered_map<int, Pipe> &pipes){
+void edit_GTN_menu(GTNetwork& gtn){
     while (true){
         print_edit_GTN_menu();
 
@@ -403,16 +390,16 @@ void edit_GTN_menu(GTNetwork& gtn, std::unordered_map<int, CompressorStation> &c
         case 0:
             return;
         case 1:
-            gtn.add_node(c_ss, pipes);
+            gtn.add_node();
             break;
         case 2:
-            gtn.delObj(pipes, c_ss);
+            gtn.delPipeFromGraph();
             break;
         case 3:
-            gtn.delObj(c_ss, pipes);
+            gtn.delCSFromGraph();
             break;
         case 4:
-            gtn.clear_graph(pipes, c_ss);
+            gtn.clear_graph();
             break;
         default:
             cout << "You choose the number, that not exist!\n";
@@ -439,12 +426,6 @@ void print_main_menu(){
 
 void main_menu(){
     Logger logger("log_" + std::string(std::format("{:%d_%m_%Y_%H_%M}", system_clock::now())) + ".txt");
-
-    unordered_map<int, Pipe> pipes;
-    unordered_set<int> selected_pipes;
-
-    unordered_map<int, CompressorStation> c_ss;
-    unordered_set<int> selected_css;
     
     GTNetwork gtn;
 
@@ -460,22 +441,22 @@ void main_menu(){
             cout << "Goodbye!\n";
             return;
         case 1:
-            pipes_menu(gtn, pipes, selected_pipes, c_ss);
+            pipes_menu(gtn);
             break;
         case 2:
-            CS_menu(gtn, pipes, selected_pipes, c_ss);
+            CS_menu(gtn);
             break;
         case 3:
-            GTN_menu(gtn, c_ss, pipes);
+            GTN_menu(gtn);
             break;
         case 4:
-            see_all_objects(pipes, c_ss);
+            cout << gtn;
             break;
         case 5:
-            save_obj(pipes, c_ss);
+            gtn.save();
             break;
         case 6:
-            load_obj(pipes, c_ss, selected_pipes, selected_css);
+            gtn.load();
             break;
         default:
             cout << "You choose the number, that not exist!\n";

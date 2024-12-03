@@ -12,10 +12,6 @@
                             std::cerr << str << std::endl;
 
 
-#define CLEAR_SELECTED(selected) selected.clear(); \
-                                std::cout << "Selected cleared!" << std::endl;
-
-
 template<typename T, typename K>
 using Func = bool(*)(const T& value, const K& range);
 
@@ -54,13 +50,6 @@ T GetCorrectNumber(const std::string message, const K& range, Func<T, K> f){
     return value;
 }
 
-void save_obj(const std::unordered_map<int, Pipe> &pipes, const std::unordered_map<int, CompressorStation> &c_ss);
-
-void load_obj(std::unordered_map<int, Pipe> &pipes, std::unordered_map<int, CompressorStation> &c_ss, std::unordered_set<int> &selected_pipe, std::unordered_set<int> &selected_css);
-
-void see_all_objects(const std::unordered_map<int, Pipe> &pipes, const std::unordered_map<int, CompressorStation> &c_ss);
-
-
 template<typename T>
 void erase_obj(T &objs, const int id){
     if (objs.contains(id)){
@@ -78,13 +67,6 @@ void print_selected(const std::unordered_map<int, T> &obj, const std::unordered_
     for (const int &id: selected_obj){
         std::cout << obj.find(id)->second << std::endl; 
     }
-}
-
-
-template<typename T>
-void load(std::ifstream &file, std::unordered_map<int, T> &objs){
-    T obj(file);
-    objs.emplace(obj.get_id(), obj);
 }
 
 

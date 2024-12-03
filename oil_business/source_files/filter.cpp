@@ -5,44 +5,46 @@
 using namespace std;
 
 
-bool checkByIsWorking(const Pipe &pipe, const bool& is_working){
+bool GTNetwork::checkByIsWorking(const Pipe &pipe, const bool& is_working){
     return pipe.get_IsWorking() == is_working;
 }
 
 
-void findByIsWorking(const std::unordered_map<int, Pipe> &pipes, std::unordered_set<int> &selected_pipes){
+bool GTNetwork::findPipesByIsWorking(){
     cout << "working status(0 - no / 1 - yes): ";
-    int work_status = GetCorrectNumber<int, std::vector<int>>("working status(0 - no / 1 - yes): ", {0, 1}, IsInRange);
+    bool work_status = GetCorrectNumber<int, std::vector<int>>("working status(0 - no / 1 - yes): ", {0, 1}, IsInRange);
 
-    findByFilter<Pipe, bool>(pipes, selected_pipes, checkByIsWorking, work_status);
+    this->findByFilter<Pipe, bool>(pipes, selected_pipes, &GTNetwork::checkByIsWorking, work_status);
+    return 1;
 }
 
 
-bool checkByUnusedWorkshops(const CompressorStation &compressor_station, const float& unused_workshops){
+bool GTNetwork::checkByUnusedWorkshops(const CompressorStation &compressor_station, const float& unused_workshops){
     return (100 - compressor_station.get_workload() * 100) > unused_workshops;
 }
 
 
-void findByUnusedWorkshops(const std::unordered_map<int, CompressorStation> &c_ss, std::unordered_set<int> &selected_css){
+bool GTNetwork::findByUnusedWorkshops(){
     cout << "percent of unused workshops: ";
     float unused_wokshops = GetCorrectNumber<float, std::vector<float>>("percent of unused workshops: ", {0, 1000000}, IsInRange);
 
-    findByFilter<CompressorStation, float>(c_ss, selected_css, checkByUnusedWorkshops, unused_wokshops);
+    this->findByFilter<CompressorStation, float>(c_ss, selected_css, &GTNetwork::checkByUnusedWorkshops, unused_wokshops);
+    return 1;
 }
 
 
-bool checkByDiameter(const Pipe &pipe, const int &diameter){
+bool GTNetwork::checkByDiameter(const Pipe &pipe, const int &diameter){
     return pipe.get_diameter() == diameter;
 }
 
 
-int findByDiameter(const int diameter, std::unordered_map<int, Pipe> &pipes){
-    for (const auto& [id, pipe]: pipes){
-        if (!pipe.InUsing() && checkByDiameter(pipe, diameter)) return pipe.get_id();
+int GTNetwork::findByDiameter(const int &diameter){
+    for (const auto& [id, pipe]: this->pipes){
+        if (!pipe.InUsing() && this->checkByDiameter(pipe, diameter)) return pipe.get_id();
     }
     
     Pipe pipe(diameter);
-    pipes.emplace(pipe.get_id(), pipe);
+    this->pipes.emplace(pipe.get_id(), pipe);
 
     return pipe.get_id();
 }

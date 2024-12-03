@@ -9,38 +9,77 @@
 
 class GTNetwork{
 private:
+    template<typename T, typename K>
+    using Filter = bool(GTNetwork::*)(const T &obj, const K& param);
+
+    std::unordered_map<int, Pipe> pipes;
+    std::unordered_set<int> selected_pipes;
+
+    std::unordered_map<int, CompressorStation> c_ss;
+    std::unordered_set<int> selected_css;
+    
     std::unordered_map<int, std::unordered_set<int>> graph;
     std::vector<int> order;
 public:
-    bool eraseObjFromGraph(Pipe& pipe, std::unordered_map<int, CompressorStation>& c_ss, std::unordered_map<int, Pipe>& pipes);
-    bool eraseObjFromGraph(CompressorStation& cs, std::unordered_map<int, Pipe>& pipes, std::unordered_map<int, CompressorStation>& c_ss);
+    bool eraseObjFromGraph(Pipe& pipe);
+    bool eraseObjFromGraph(CompressorStation& cs);
 
-    bool clear_graph(std::unordered_map<int, Pipe>& pipes, std::unordered_map<int, CompressorStation>& c_ss);
+    void print_graph() const;
+    bool clear_graph();
 
-    bool create_graph(const std::unordered_map<int, CompressorStation>& c_ss, const std::unordered_map<int, Pipe>& pipes);
-    bool add_node(std::unordered_map<int, CompressorStation>& c_ss, std::unordered_map<int, Pipe>& pipes);
+    bool create_graph();
+    bool add_node();
 
-    template<typename T, typename K>
-    bool delObj(std::unordered_map<int, T>& obj_1, std::unordered_map<int, K>& obj_2);
+    bool delPipeFromGraph();
+    bool delCSFromGraph();
 
     bool make_TS();
 
-    void print_graph() const;
+    template<typename T>
+    std::unordered_set<int> selectByID(const T &set);
+    bool clear_selected(const bool &choice);
+
+    template<typename T, typename K>
+    bool checkByName(const T &obj, const K& name);
+    bool checkByIsWorking(const Pipe &pipe, const bool& is_working);
+    bool checkByUnusedWorkshops(const CompressorStation &compressor_station, const float& unused_workshops);
+    bool checkByDiameter(const Pipe &pipe, const int &diameter);
+
+    template<typename T, typename K>
+    bool findByFilter(const std::unordered_map<int, T> &obj, std::unordered_set<int> &selected_obj, Filter<T, K> func, const K& param);
+    bool findPipesByIsWorking();
+    bool findByUnusedWorkshops();
+    int findByDiameter(const int &diameter);
+
+    int add_Pipe();
+    void print_selectedPipes() const;
+    bool set_selectedPipes_byID(const bool &choice);
+    bool change_selectedPipes_workStatus();
+    bool findPipesbyName();
+    bool selectAllPipes();
+    bool del_selectedPipes();
+
+    int add_CS();
+    void print_selectedCS() const;
+    bool set_selectedCS_byID(const bool &choice);
+    bool change_selectedCS_workload();
+    bool findCSbyName();
+    bool selectAllCS();
+    bool del_selectedCS();
+
+    template<typename T>
+    bool load_obj(std::ifstream &file, std::unordered_map<int, T> &objs);
+
+    bool save() const;
+    bool load();
+
+    friend std::ostream& operator << (std::ostream &os, const GTNetwork &gtn);
 };
 
 
-template<typename T, typename K>
-bool GTNetwork::delObj(std::unordered_map<int, T>& obj_1, std::unordered_map<int, K>& obj_2){
-    int id;
-    
-    while (true){
-        std::cout << "input id(0 for exit): ";
-        id = GetCorrectNumber<int, std::unordered_map<int, T>>("input correct id: ", obj_1, ZeroRange);
-
-        if (id == 0) break;
-
-        if (obj_1.at(id).InUsing()) this->eraseObjFromGraph(obj_1.at(id), obj_2, obj_1);
-    }
-
+template<typename T>
+bool GTNetwork::load_obj(std::ifstream &file, std::unordered_map<int, T> &objs){
+    T obj(file);
+    objs.emplace(obj.get_id(), obj);
     return 1;
 }
