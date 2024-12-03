@@ -1,7 +1,7 @@
 #pragma once
+#include <vector>
 #include <unordered_map>
 #include <unordered_set>
-#include <vector>
 #include "pipe.h"
 #include "compressor_station.h"
 #include "utils.h"
@@ -20,10 +20,26 @@ private:
     
     std::unordered_map<int, std::unordered_set<int>> graph;
     std::vector<int> order;
-public:
+
     bool eraseObjFromGraph(Pipe& pipe);
     bool eraseObjFromGraph(CompressorStation& cs);
 
+    template<typename T>
+    void erase_obj(T &objs, const int id);
+
+    template<typename T>
+    bool load_obj(std::ifstream &file, std::unordered_map<int, T> &objs);
+
+    template<typename T, typename K>
+    bool checkByName(const T &obj, const K& name);
+    bool checkByIsWorking(const Pipe &pipe, const bool& is_working);
+    bool checkByUnusedWorkshops(const CompressorStation &compressor_station, const float& unused_workshops);
+    bool checkByDiameter(const Pipe &pipe, const int &diameter);
+
+    template<typename T, typename K>
+    bool findByFilter(const std::unordered_map<int, T> &obj, std::unordered_set<int> &selected_obj, Filter<T, K> func, const K& param);
+    int findByDiameter(const int &diameter);
+public:
     void print_graph() const;
     bool clear_graph();
 
@@ -38,18 +54,9 @@ public:
     template<typename T>
     std::unordered_set<int> selectByID(const T &set);
     bool clear_selected(const bool &choice);
-
-    template<typename T, typename K>
-    bool checkByName(const T &obj, const K& name);
-    bool checkByIsWorking(const Pipe &pipe, const bool& is_working);
-    bool checkByUnusedWorkshops(const CompressorStation &compressor_station, const float& unused_workshops);
-    bool checkByDiameter(const Pipe &pipe, const int &diameter);
-
-    template<typename T, typename K>
-    bool findByFilter(const std::unordered_map<int, T> &obj, std::unordered_set<int> &selected_obj, Filter<T, K> func, const K& param);
+    
     bool findPipesByIsWorking();
     bool findByUnusedWorkshops();
-    int findByDiameter(const int &diameter);
 
     int add_Pipe();
     void print_selectedPipes() const;
@@ -67,9 +74,6 @@ public:
     bool selectAllCS();
     bool del_selectedCS();
 
-    template<typename T>
-    bool load_obj(std::ifstream &file, std::unordered_map<int, T> &objs);
-
     bool save() const;
     bool load();
 
@@ -82,4 +86,13 @@ bool GTNetwork::load_obj(std::ifstream &file, std::unordered_map<int, T> &objs){
     T obj(file);
     objs.emplace(obj.get_id(), obj);
     return 1;
+}
+
+template<typename T>
+void GTNetwork::erase_obj(T &objs, const int id){
+    if (objs.contains(id)){
+        objs.erase(id);
+    } else {
+        std::cout << "There is not object with id " << id << std::endl;
+    }
 }

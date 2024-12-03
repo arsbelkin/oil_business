@@ -1,12 +1,9 @@
 #pragma once
-#include "pipe.h"
-#include "compressor_station.h"
-#include "utils.h"
-#include "GTN.h"
 #include <unordered_map>
 #include <unordered_set>
 #include <sstream>
 #include <string>
+#include "GTN.h"
 
 
 template<typename T>

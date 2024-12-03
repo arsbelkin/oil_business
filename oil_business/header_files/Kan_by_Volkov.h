@@ -1,4 +1,3 @@
-#include <iostream>
 #include <queue>
 #include <unordered_map>
 #include <unordered_set>
@@ -46,7 +45,6 @@ std::vector<T> Kan_by_Volkov(std::unordered_map<T, std::unordered_set<T>>& graph
 if (sort.size() != inDegree.size()) {
 		return {  };
 	}
-
 	else {
 		return sort;
 	}

@@ -15,10 +15,7 @@ set(SRC_LIST
     ${SRC_DIR}/pipe.cpp 
     ${SRC_DIR}/compressor_station.cpp 
     ${SRC_DIR}/menu.cpp 
-    #${SRC_DIR}/utils.cpp
-    #${SRC_DIR}/pipes_func.cpp
     ${SRC_DIR}/filter.cpp
-    #${SRC_DIR}/CS_func.cpp
     ${SRC_DIR}/logger.cpp
     ${SRC_DIR}/GTN.cpp
     )
