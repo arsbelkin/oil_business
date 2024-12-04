@@ -1,16 +1,18 @@
 #pragma once
 #include <vector>
+#include <queue>
 #include <unordered_map>
 #include <unordered_set>
 #include "pipe.h"
 #include "compressor_station.h"
 #include "utils.h"
 
-
 class GTNetwork{
 private:
     template<typename T, typename K>
     using Filter = bool(GTNetwork::*)(const T &obj, const K& param);
+
+    const int INF = std::numeric_limits<int>::max();
 
     std::unordered_map<int, Pipe> pipes;
     std::unordered_set<int> selected_pipes;
@@ -20,6 +22,7 @@ private:
     
     std::unordered_map<int, std::unordered_set<int>> graph;
     std::vector<int> order;
+    std::vector<int> min_path;
 
     bool eraseObjFromGraph(Pipe& pipe);
     bool eraseObjFromGraph(CompressorStation& cs);
@@ -39,6 +42,9 @@ private:
     template<typename T, typename K>
     bool findByFilter(const std::unordered_map<int, T> &obj, std::unordered_set<int> &selected_obj, Filter<T, K> func, const K& param);
     int findByDiameter(const int &diameter);
+
+    template<typename T>
+    std::vector<T> metodDeikstra(T StartNode, T EndNode);
 public:
     void print_graph() const;
     bool clear_graph();
@@ -50,6 +56,8 @@ public:
     bool delCSFromGraph();
 
     bool make_TS();
+    int getDistance(const int& id_1, const int& id_2);
+    bool find_min_dist();
 
     template<typename T>
     std::unordered_set<int> selectByID(const T &set);
@@ -95,4 +103,59 @@ void GTNetwork::erase_obj(T &objs, const int id){
     } else {
         std::cout << "There is not object with id " << id << std::endl;
     }
+}
+
+
+
+
+
+template<typename T>
+std::vector<T> GTNetwork::metodDeikstra(T StartNode, T EndNode) {
+	std::unordered_map<T, int> dist;
+	std::unordered_map<T, T> prev;
+	std::unordered_set<T> visited;
+
+
+    for (const auto& pair : this->graph) {
+        dist[pair.first] = INF;
+    }
+    dist[StartNode] = 0;
+
+    std::priority_queue<std::pair<int, T>, std::vector<std::pair<int, T>>, std::greater<std::pair<int, T>>> pq;
+    pq.push({0, StartNode});
+
+	while (!pq.empty()) {
+		T u = pq.top().second;
+		pq.pop();
+
+		if (u == EndNode) { break; }
+
+		visited.insert(u);
+
+        for (const auto& v : this->graph.at(u)) {
+            if (visited.find(v) == visited.end()) {
+                int weight = this->getDistance(u, v);
+                if (dist[u] != INF && dist[u] + weight < dist[v]) {
+                    dist[v] = dist[u] + weight;
+                    prev[v] = u;
+                    pq.push({dist[v], v});
+                }
+            }
+		}
+	}
+
+    std::vector<T> path;
+    T current_node = EndNode;
+    while (current_node != StartNode) {
+        path.push_back(current_node); 
+        if (prev.find(current_node) != prev.end()) {
+            current_node = prev[current_node];
+        } else {
+            return std::vector<T>();
+        }
+    }
+	
+    path.push_back(StartNode);
+    reverse(path.begin(), path.end());
+    return path;
 }

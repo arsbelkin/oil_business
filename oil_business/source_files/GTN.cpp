@@ -395,3 +395,48 @@ bool GTNetwork::del_selectedCS(){
     std::cout << counter << " CS was erased!" << std::endl;
     return 1;
 }
+
+
+int GTNetwork::getDistance(const int& id_1, const int& id_2){
+    int min_length = 10001;
+    auto neighbours_pipes = this->c_ss.at(id_1).get_links()[1]; // выходящие трубы
+    for (const auto& pipeID: neighbours_pipes){
+        const auto& pipe = this->pipes.at(pipeID);
+        if (pipe.get_links()[1] == id_2)
+            if (pipe.get_length() < min_length)
+                min_length = pipe.get_length();
+    }
+
+    if (min_length == 10001)
+        return this->INF;
+    else
+        return min_length;
+}
+
+bool GTNetwork::find_min_dist(){
+    if (!this->graph.size()){
+        return 0;
+    }
+
+     // старт
+    cout << "output id: ";
+    int start_id = GetCorrectNumber<int, std::unordered_map<int, std::unordered_set<int>>>("output id: ", this->graph, IsExistingObj);
+
+    // конец
+    cout << "input id: ";
+    int stop_id = GetCorrectNumber<int, std::unordered_map<int, std::unordered_set<int>>>("input id: ", this->graph, IsExistingObj);
+
+    this->min_path = this->metodDeikstra(start_id, stop_id);
+
+    cout << "min path: ";
+    if (this->min_path.size()) {
+        for (const auto& v: this->min_path) 
+            cout << v << " ";
+    } else {
+        cout << "cant find min path!" << endl;
+    }
+    
+    cout << endl;
+
+    return 1;
+}

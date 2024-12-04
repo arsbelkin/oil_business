@@ -27,6 +27,7 @@ public:
     std::string get_name() const;
     bool get_IsWorking() const;
     int get_diameter() const;
+    int get_length() const;
 
     bool InUsing() const;
     std::vector<int> get_links() const;

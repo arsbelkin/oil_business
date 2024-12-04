@@ -94,6 +94,11 @@ int Pipe::get_diameter() const{
 }
 
 
+int Pipe::get_length() const{
+    return this->length;
+}
+
+
 bool Pipe::InUsing() const{
     return (this->links[0]) || (this->links[1]);
 }

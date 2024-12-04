@@ -329,8 +329,9 @@ void print_GTN_menu(){
     cout << "0 - back\n";
     cout << "1 - print graph\n";
     cout << "2 - make TS\n";
-    cout << "3 - create graph\n";
-    cout << "4 - edit GTN\n";
+    cout << "3 - find min path\n";
+    cout << "4 - create graph\n";
+    cout << "5 - edit GTN\n";
     cout << "--------------\n";
 }
 
@@ -338,7 +339,7 @@ void GTN_menu(GTNetwork& gtn){
     while (true){
         print_GTN_menu();
 
-        int choice = GetCorrectNumber<int, std::vector<int>>("input number: ", {0, 4}, IsInRange);
+        int choice = GetCorrectNumber<int, std::vector<int>>("input number: ", {0, 5}, IsInRange);
 
         switch (choice)
         {
@@ -351,9 +352,12 @@ void GTN_menu(GTNetwork& gtn){
             gtn.make_TS();
             break;
         case 3:
-            gtn.create_graph();
+            gtn.find_min_dist();
             break;
         case 4:
+            gtn.create_graph();
+            break;
+        case 5:
             edit_GTN_menu(gtn);
             break;
         default:
