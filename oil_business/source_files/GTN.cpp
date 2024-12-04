@@ -38,7 +38,8 @@ void GTNetwork::print_graph() const{
 
 
 bool GTNetwork::add_node(){
-    if (!c_ss.size()) return false;
+    if (c_ss.size() < 2) 
+        return false;
 
     // откуда выходит труба
     cout << "output id: ";
@@ -65,7 +66,8 @@ bool GTNetwork::make_TS(){
 
     cout << "TS: ";
     if (this->order.size()) {
-        for (const auto& v: this->order) cout << v << " ";
+        for (const auto& v: this->order) 
+            cout << v << " ";
     } else {
         cout << "graph has cycle or TS is empty set!" << endl;
     }
@@ -239,7 +241,8 @@ bool GTNetwork::delPipeFromGraph(){
 
         if (id == 0) break;
 
-        if (this->pipes.at(id).InUsing()) this->eraseObjFromGraph(this->pipes.at(id));
+        if (this->pipes.at(id).InUsing()) 
+            this->eraseObjFromGraph(this->pipes.at(id));
     }
 
     return 1;
@@ -254,7 +257,8 @@ bool GTNetwork::delCSFromGraph(){
 
         if (id == 0) break;
 
-        if (this->c_ss.at(id).InUsing()) this->eraseObjFromGraph(this->c_ss.at(id));
+        if (this->c_ss.at(id).InUsing()) 
+            this->eraseObjFromGraph(this->c_ss.at(id));
     }
 
     return 1;
