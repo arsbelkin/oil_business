@@ -7,6 +7,7 @@
 #include "compressor_station.h"
 #include "utils.h"
 
+
 class GTNetwork{
 private:
     template<typename T, typename K>
@@ -38,13 +39,16 @@ private:
     bool checkByIsWorking(const Pipe &pipe, const bool& is_working);
     bool checkByUnusedWorkshops(const CompressorStation &compressor_station, const float& unused_workshops);
     bool checkByDiameter(const Pipe &pipe, const int &diameter);
+    bool checkByLenght(const Pipe &pipe, const int &length);
 
     template<typename T, typename K>
     bool findByFilter(const std::unordered_map<int, T> &obj, std::unordered_set<int> &selected_obj, Filter<T, K> func, const K& param);
-    int findByDiameter(const int &diameter);
+    int findByDiameter(const int &diameter, const int& length);
 
     template<typename T>
     std::vector<T> metodDeikstra(T StartNode, T EndNode);
+
+    bool show_MinPath();
 public:
     void print_graph() const;
     bool clear_graph();
@@ -57,6 +61,7 @@ public:
 
     bool make_TS();
     int getDistance(const int& id_1, const int& id_2);
+    int getAbsoluteDistance(const int& id_1, const int& id_2);
     bool find_min_dist();
 
     template<typename T>
@@ -81,6 +86,7 @@ public:
     bool findCSbyName();
     bool selectAllCS();
     bool del_selectedCS();
+    std::unordered_set<int> get_IncidentPipes(const int& id_1, const int& id_2);
 
     bool save() const;
     bool load();

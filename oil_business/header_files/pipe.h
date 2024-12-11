@@ -19,7 +19,7 @@ private:
 
 public:
     Pipe();
-    Pipe(const int diameter);
+    Pipe(const int& diameter, const int& lenght);
     Pipe(std::ifstream &file);
 
     static int get_currentId();

@@ -37,12 +37,21 @@ bool GTNetwork::checkByDiameter(const Pipe &pipe, const int &diameter){
 }
 
 
-int GTNetwork::findByDiameter(const int &diameter){
+bool GTNetwork::checkByLenght(const Pipe &pipe, const int &length){
+    if (length == this->INF){
+        return 1;
+    }
+    return pipe.get_length() == length;
+}
+
+
+int GTNetwork::findByDiameter(const int &diameter, const int& length){
     for (const auto& [id, pipe]: this->pipes){
-        if (!pipe.InUsing() && this->checkByDiameter(pipe, diameter)) return pipe.get_id();
+        if (!pipe.InUsing() && this->checkByDiameter(pipe, diameter) && this->checkByLenght(pipe, length))
+            return pipe.get_id();
     }
     
-    Pipe pipe(diameter);
+    Pipe pipe(diameter, length);
     this->pipes.emplace(pipe.get_id(), pipe);
 
     return pipe.get_id();

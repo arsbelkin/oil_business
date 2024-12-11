@@ -52,7 +52,7 @@ T GetCorrectNumber(const std::string message, const K& range, Func<T, K> f){
 
 template<typename T>
 int get_maxKey(const std::unordered_map<int, T> &objs){
-    int id=-1;
+    int id=0;
     for (auto &[k,v]: objs){
         if (k > id) id = k;
     }

@@ -34,7 +34,7 @@ Pipe::Pipe(){
 }
 
 
-Pipe::Pipe(const int diameter){
+Pipe::Pipe(const int& diameter, const int& lenght){
         cout << "-----add pipe-----\n";
 
     this->id = ++Pipe::current_pipeID;
@@ -43,8 +43,13 @@ Pipe::Pipe(const int diameter){
     cout << "name: ";
     INPUT_LINE(cin, this->name);
 
-    cout << "lenght: ";
-    this->length = GetCorrectNumber<int, std::vector<int>>("lenght: ", {1, 10000}, IsInRange);
+    if (lenght != std::numeric_limits<int>::max()){
+        this->length = lenght;
+        cout << "lenght: " << lenght << endl;
+    } else {
+        cout << "lenght: ";
+        this->length = GetCorrectNumber<int, std::vector<int>>("lenght: ", {1, 10000}, IsInRange);
+    }
 
     this->diameter = diameter;
     cout << "diameter: " << diameter << endl;

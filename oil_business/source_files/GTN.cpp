@@ -51,7 +51,8 @@ bool GTNetwork::add_node(){
 
     cout << "pipe's diameter: ";
     int diameter = GetCorrectNumber<int, std::unordered_set<int>>("pipe's diameter: ", {500, 700, 1000, 1400}, IsExistingObj);
-    int pipe_id = findByDiameter(diameter);
+    int length = this->getAbsoluteDistance(output_id, input_id);
+    int pipe_id = findByDiameter(diameter, length);
 
     this->c_ss.at(output_id).addLink(1, pipe_id);
     this->pipes.at(pipe_id).set_links(output_id, input_id);
@@ -397,46 +398,81 @@ bool GTNetwork::del_selectedCS(){
 }
 
 
-int GTNetwork::getDistance(const int& id_1, const int& id_2){
-    int min_length = 10001;
+std::unordered_set<int> GTNetwork::get_IncidentPipes(const int& id_1, const int& id_2){
+    std::unordered_set<int> result = {};
     auto neighbours_pipes = this->c_ss.at(id_1).get_links()[1]; // выходящие трубы
     for (const auto& pipeID: neighbours_pipes){
-        const auto& pipe = this->pipes.at(pipeID);
+        const Pipe& pipe = this->pipes.at(pipeID);
         if (pipe.get_links()[1] == id_2)
-            if (pipe.get_length() < min_length)
-                min_length = pipe.get_length();
+            result.emplace(pipeID);
     }
 
-    if (min_length == 10001)
-        return this->INF;
-    else
-        return min_length;
+    return result;
 }
 
-bool GTNetwork::find_min_dist(){
-    if (!this->graph.size()){
+
+int GTNetwork::getDistance(const int& id_1, const int& id_2){
+    const std::unordered_set<int> incidentPipes = this->get_IncidentPipes(id_1, id_2);
+
+    if (!incidentPipes.size())
+        return this->INF;
+
+    for (const auto& pipeID: incidentPipes){
+        if (this->pipes.at(pipeID).get_IsWorking())
+            return this->pipes.at(pipeID).get_length();
+    }
+
+    return this->INF;
+}
+
+
+int GTNetwork::getAbsoluteDistance(const int& id_1, const int& id_2){
+    int len_1 = this->getDistance(id_1, id_2);
+    int len_2 = this->getDistance(id_2, id_1);
+
+    return min(len_1, len_2);
+}
+
+
+bool GTNetwork::show_MinPath(){
+    cout << "min path: ";
+    if (!this->min_path.size()){
+        cout << "cant find min path!" << endl;
         return 0;
     }
 
-     // старт
-    cout << "output id: ";
-    int start_id = GetCorrectNumber<int, std::unordered_map<int, std::unordered_set<int>>>("output id: ", this->graph, IsExistingObj);
+    if (this->min_path.size() > 1) {
+        int dist = 0;
+        for (int i=0; i < this->min_path.size() - 1; ++i){
+            dist += this->getDistance(this->min_path[i], this->min_path[i+1]);
+            cout << this->min_path[i] << " ";
+        }
+        cout << this->min_path[this->min_path.size()-1] << endl;
+        cout << "Distance: " << dist << endl;
+    } else {
+        cout << this->min_path[0] << endl;
+        cout << "Distance: " << 0 << endl;
+    }
+    cout << endl;
+    return 1;
+}
+
+
+bool GTNetwork::find_min_dist(){
+    if (!this->graph.size()){
+        cout << "No graph" << endl;
+        return 0;
+    }
+
+    // старт
+    cout << "start id: ";
+    int start_id = GetCorrectNumber<int, std::unordered_map<int, std::unordered_set<int>>>("start id: ", this->graph, IsExistingObj);
 
     // конец
-    cout << "input id: ";
-    int stop_id = GetCorrectNumber<int, std::unordered_map<int, std::unordered_set<int>>>("input id: ", this->graph, IsExistingObj);
+    cout << "stop id: ";
+    int stop_id = GetCorrectNumber<int, std::unordered_map<int, std::unordered_set<int>>>("stop id: ", this->graph, IsExistingObj);
 
     this->min_path = this->metodDeikstra(start_id, stop_id);
 
-    cout << "min path: ";
-    if (this->min_path.size()) {
-        for (const auto& v: this->min_path) 
-            cout << v << " ";
-    } else {
-        cout << "cant find min path!" << endl;
-    }
-    
-    cout << endl;
-
-    return 1;
+    return this->show_MinPath();
 }
