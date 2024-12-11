@@ -7,16 +7,22 @@
 class Pipe{
 private:
     static int current_pipeID;
+    std::unordered_map<int, int> dictPerfomances = {
+        {500, 5},
+        {700, 12},
+        {1000, 30},
+        {1400, 95}
+    };
 
     int id;
 
     std::string name;
     int length;
     int diameter;
+    int MAXperfomance;
     bool is_working;
-
+    
     std::vector<int> links = {0, 0};
-
 public:
     Pipe();
     Pipe(const int& diameter, const int& lenght);
@@ -28,6 +34,7 @@ public:
     bool get_IsWorking() const;
     int get_diameter() const;
     int get_length() const;
+    int get_MAXperfomance() const;
 
     bool InUsing() const;
     std::vector<int> get_links() const;

@@ -1,6 +1,9 @@
 #include <iostream>
 #include "../header_files/GTN.h"
+#include "../header_files/GTN_utils.h"
 #include "../header_files/filter.h"
+#include "../header_files/Deikstra.h"
+#include "../header_files/EdmondsKarp.h"
 #include "../header_files/Kan_by_Volkov.h"
 #include <fstream>
 
@@ -411,6 +414,18 @@ std::unordered_set<int> GTNetwork::get_IncidentPipes(const int& id_1, const int&
 }
 
 
+int GTNetwork::getCapacity(const int& id_1, const int& id_2){
+    const std::unordered_set<int> incidentPipes = this->get_IncidentPipes(id_1, id_2);
+    int capacity = 0;
+
+    for (const auto& pipeID: incidentPipes){
+        capacity += this->pipes.at(pipeID).get_MAXperfomance();
+    }
+
+    return capacity;
+}
+
+
 int GTNetwork::getDistance(const int& id_1, const int& id_2){
     const std::unordered_set<int> incidentPipes = this->get_IncidentPipes(id_1, id_2);
 
@@ -460,7 +475,7 @@ bool GTNetwork::show_MinPath(){
 
 bool GTNetwork::find_min_dist(){
     if (!this->graph.size()){
-        cout << "No graph" << endl;
+        cout << "No graph!" << endl;
         return 0;
     }
 
@@ -475,4 +490,38 @@ bool GTNetwork::find_min_dist(){
     this->min_path = this->metodDeikstra(start_id, stop_id);
 
     return this->show_MinPath();
+}
+
+
+bool GTNetwork::show_maxFlow(){
+    cout << "max flow path: ";
+    for (const auto& csID: this->maxFlow_path){
+        cout << csID << " ";
+    }
+    cout << endl;
+    
+    cout << "max flow: " << this->maxFlow << endl;
+    
+    return 1;
+}
+
+
+bool GTNetwork::count_maxFlow(){
+    if (!this->graph.size()){
+        cout << "No graph!" << endl;
+        cout << "max flow: 0" << endl;
+        return 0;
+    }
+
+    // старт
+    cout << "source id: ";
+    int source_id = GetCorrectNumber<int, std::unordered_map<int, std::unordered_set<int>>>("source id: ", this->graph, IsExistingObj);
+
+    // конец
+    cout << "sink id: ";
+    int sink_id = GetCorrectNumber<int, std::unordered_map<int, std::unordered_set<int>>>("sink id: ", this->graph, IsExistingObj);
+
+    this->maxFlow = this->edmondsKarp<int>(source_id, sink_id);
+
+    return this->show_maxFlow();
 }

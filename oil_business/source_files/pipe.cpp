@@ -25,6 +25,9 @@ Pipe::Pipe(){
     cout << "diameter: ";
     this->diameter = GetCorrectNumber<int, std::unordered_set<int>>("diameter: ", {500, 700, 1000, 1400}, IsExistingObj);
 
+    this->MAXperfomance = this->dictPerfomances.at(diameter);
+    cout << "perfomance: " << this->MAXperfomance << endl;
+
     cout << "is_working(0 - no / 1 - yes): ";
     this->is_working = GetCorrectNumber<int, std::vector<int>>("is_working(0 - no / 1 - yes): ", {0, 1}, IsInRange);
 
@@ -54,6 +57,9 @@ Pipe::Pipe(const int& diameter, const int& lenght){
     this->diameter = diameter;
     cout << "diameter: " << diameter << endl;
 
+    this->MAXperfomance = this->dictPerfomances.at(diameter);
+    cout << "perfomance: " << this->MAXperfomance << endl;
+
     cout << "is_working(0 - no / 1 - yes): ";
     this->is_working = GetCorrectNumber<int, std::vector<int>>("is_working(0 - no / 1 - yes): ", {0, 1}, IsInRange);
 
@@ -69,6 +75,7 @@ Pipe::Pipe(std::ifstream &file){
     getline(file>>std::ws, this->name);
     file >> this->length;
     file >> this->diameter;
+    file >> this->MAXperfomance;
     file >> this->is_working;
     file >> this->links[0];
     file >> this->links[1];
@@ -108,6 +115,11 @@ bool Pipe::InUsing() const{
     return (this->links[0]) || (this->links[1]);
 }
 
+
+int Pipe::get_MAXperfomance() const{
+    return this->MAXperfomance * this->is_working;
+}
+
 std::vector<int> Pipe::get_links() const{
     return this->links;
 }
@@ -145,6 +157,7 @@ ostream& operator << (ostream &os, const Pipe &pipe){
         << "name: " << pipe.name << endl
         << "lenght: " << pipe.length << endl
         << "diameter: " << pipe.diameter << endl
+        << "perfomance: " << pipe.MAXperfomance << endl
         << "is working: " << pipe.work_to_string() << endl
         << "links{" << endl
         << "   " << "out: "
@@ -164,6 +177,7 @@ void Pipe::save(ofstream &file) const{
     file << this->name << endl;
     file << this->length << endl;
     file << this->diameter << endl;
+    file << this->MAXperfomance << endl;
     file << this->is_working << endl;
     file << this->links[0] << endl;
     file << this->links[1] << endl;
