@@ -521,7 +521,14 @@ bool GTNetwork::count_maxFlow(){
     cout << "sink id: ";
     int sink_id = GetCorrectNumber<int, std::unordered_map<int, std::unordered_set<int>>>("sink id: ", this->graph, IsExistingObj);
 
-    this->maxFlow = this->edmondsKarp<int>(source_id, sink_id);
-
-    return this->show_maxFlow();
+    std::vector<int> flowPath = this->metodDeikstra(source_id, sink_id);
+    if (!flowPath.size()) {
+        cout << "No path to flow: max flow = 0" << endl;
+    } else if (flowPath.size() == 1){
+        cout << "max flow: INF" << endl;
+        cout << "max flow path: " << flowPath[0] << endl;
+    } else {
+        this->maxFlow = this->edmondsKarp<int>(source_id, sink_id);
+        return this->show_maxFlow();
+    }
 }
